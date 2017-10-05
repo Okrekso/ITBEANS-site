@@ -1,0 +1,132 @@
+body
+{
+	background-color:#2E2E2E;
+}
+
+@font-face
+{
+font-family:HeaderText;
+src: url('headfont.otf');	
+}
+
+#button_home
+{
+	position:absolute;
+	margin:10 10;
+	background:#4D65FD;
+	height:40;
+	top:60;
+	width:10%;
+	min-width:150;
+	box-shadow: 0 0 10px;
+	max-width:200;
+}
+#button_members
+{
+	position:absolute;
+	margin:10 200;
+	background:#4D65FD;
+	height:40;
+	top:60;
+	width:10%;
+	min-width:150px;
+	box-shadow: 0 0 10px;
+	max-width:200;
+}
+
+#button_myCab
+{
+	position:absolute;
+	margin:10 400;
+	background:#4D65FD;
+	height:40;
+	top:60;
+	width:15%;
+	min-width:250px;
+	box-shadow: 0 0 10px;
+	max-width:300;
+}
+#shapka_fon
+{
+	position:absolute;
+	background:#6B7DF5;
+	left:0;
+	right:0;
+	top:20;
+	height:50px;
+	min-width:900;
+	box-shadow: 0 0 10px;
+}
+
+.head
+{
+	position:inherit;
+	margin:0 20;
+	font-size:40;
+	font-family:HeaderText;
+	padding:auto;
+	Color:white;
+}
+
+.main
+{
+	position:relative;
+	background:white;
+	box-shadow: 0 0 10px;
+	width:75%;
+	height:300;
+	min-width:300px;
+}
+
+.btn_text
+{
+	-webkit-user-select:none;
+	margin:0 0;
+	font-size:30;
+	font-family:HeaderText;
+	Color:white;
+}
+.small_btn_text
+{
+	-webkit-user-select:none;
+	margin:0 20;
+	position:absolute;
+	font-size:25;
+	font-family:HeaderText;
+	Color:white;
+}
+
+.zagolovok
+{
+	margin:10 5;
+	font-size:25;
+	font-family:HeaderText;
+	Color:white;
+}
+
+.text_S
+{
+	margin:0 5;
+	font-size:15;
+	font-family:HeaderText;
+	Color:Black;
+}
+
+@keyframes anim 
+{
+    from { background-color:#4D65FD; }
+    to { background-color: #283272; }
+}
+#search:focus
+{
+	value:0;
+}
+
+.btn:hover, .btnS:hover
+{
+	cursor:pointer;
+	background-color:red;
+	animation-fill-mode: forwards;
+	animation-name:anim;
+	animation-duration:2s;
+}
