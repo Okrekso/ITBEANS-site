@@ -9,13 +9,49 @@ class sMain
 	public function __construct($head, $content)
 	{
 		$this->head=$head; $this->content=$content;
-		$point=0;
+		$this->point=0;
+	}
+
+	function chek_search($str)
+	{
+		$str=mb_strtolower($str,'UTF-8');
+		$head=mb_strtolower($this->head,'UTF-8');
+		$end=false;
+		$start=0;
+
+		$ball=100/iconv_strlen($str,'UTF-8');
+
+		for($i=0;$i<iconv_strlen($str,'UTF-8');$i++)
+		{
+			$str_char=iconv_substr($str,$i,1,'UTF-8');
+			
+			for($d=$start;$d<iconv_strlen($head,'UTF-8');$d++)
+			{
+				$stat_char=iconv_substr($head,$d,1,'UTF-8');
+				
+				if($str_char==$stat_char)
+				{
+					$this->point+=$ball;
+					$start=$d+1;
+					break;
+				}
+				else
+				{
+					if($this->point>=$ball)
+					{
+						$end=true;
+						break;
+					}
+				}
+			}
+
+			if($end)
+			{
+				break;
+			}
+		}
 	}
 }
-
-$stat=[new sMain("Основание клуба","тут будет текст; а это типа картинка"), new sMain("Иерархия клуба","тратата"),
-new sMain("Дополнительные баллы","текст о баллах"), new sMain("Кодовый час","еще какой-то текст")];
-$statti=array_reverse($stat);
 
 function sorter($str)
 {
@@ -23,41 +59,16 @@ function sorter($str)
 	//echo "<script>alert(\"$str\")</script>";
 	if($_GET['search']!=null)
 	{
-		echo "<script>alert(\"I have request: $str\")</script>";
 		global $statti,$stat;
 		
 		$statti=array();
 		
-		$ball=100/iconv_strlen($str,'UTF-8');
-		$start=0;
 		for($i=0;$i<count($stat);$i++)
 		{
-			$ths=$stat[$i];
-			for($d=0;$d<iconv_strlen($str,'UTF-8');$d++)
+			$stat[$i]->chek_search($str);
+			if($stat[$i]->point>50)
 			{
-				for($c=$start;$c<iconv_strlen($ths->head,'UTF-8');$c++)
-				{
-					if($stat[$i]->point==100){ break; }
-					$headB=mb_substr($ths->head,$c,1,'UTF-8');
-					echo "<script>alert(\"char: $headB\")</script>";
-					if(mb_substr($str,$d,1,'UTF-8')==mb_strtolower($headB,'UTF-8'))
-						{
-							$start=$c+1;
-							$stat[$i]->point+=$ball;
-							break;
-						}
-					else
-						{
-							if($stat[$i]->point>=$ball)
-							$stat[$i]->point=0;
-						}							
-				}
-			}
-			if($stat[$i]->point>=50)
-			{
-				$p=$stat[$i]->point;
-				echo "<script>alert(\"point of $i:$p\")</script>";
-				array_push($statti, $stat[$i]);
+				array_push($statti,$stat[$i]);
 			}
 		}
 	}
@@ -67,12 +78,18 @@ function sorter($str)
 	}
 }
 
+$stat=[new sMain("Основание клуба","тут будет текст; а это типа картинка"), new sMain("Иерархия клуба","тратата"),
+new sMain("Дополнительные баллы","текст о баллах"), new sMain("Кодовый час","еще какой-то текст")];
+$statti=array_reverse($stat);
+
+
+
 sorter($_GET['search']);
 ?>
 <html>
 <head>
-<link rel="shortcut icon" href="bean.ico" type="x-icon"/>
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link rel="shortcut icon" href="/bean.ico" type="x-icon"/>
+<link href="/pages/styles/style.css" rel="stylesheet" type="text/css"/>
 <title>IT B.E.A.N.S.</title>
 <meta charset="utf-8">
 </head>
@@ -86,6 +103,9 @@ sorter($_GET['search']);
 </a>
 <a href="members.php">
 <div id="button_members" class="btn"><p class="btn_text" align="center">Участники</p></div>
+</a>
+<a href="news.php">
+<div id="button_news" class="btn"><p class="btn_text" align="center">Новости</p></div>
 </a>
 <a href="accout.php">
 <div id="button_myCab" class="btn"><p class="btn_text" align="center">Мой кабинет</p></div>
@@ -106,8 +126,19 @@ sorter($_GET['search']);
 	box-shadow: 0 0 10px;
 " id="search">
 <form method="get">
-<input name="search" type="text" onclick="this.value=''; sorter('sss');" value="поиск . . ." style="color:gray; width:100%; height:30; position:relative; margin:auto auto"/>
-<div id="search" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;"><img style="position:relative; margin:auto auto; width:30; height:30;" src="search.png"/></div>
+<script>
+function Sclick(i)
+{
+	if(i.value=="поиск . . .")
+	{
+		i.value="";
+	}
+}
+</script>
+<input name="search" type="text" onclick="Sclick(this);"
+
+ value="поиск . . ." style="color:gray; width:100%; height:30; position:relative; margin:auto auto"/>
+<div id="search" onclick="document.location.href="itb"" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;"><img style="position:relative; margin:auto auto; width:30; height:30;" src="/search.png"/></div>
 
 </form>
 </div>

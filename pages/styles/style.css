@@ -6,7 +6,7 @@ body
 @font-face
 {
 font-family:HeaderText;
-src: url('headfont.otf');	
+src: url('/pages/fonts/headfont.otf');	
 }
 
 #button_home
@@ -21,10 +21,22 @@ src: url('headfont.otf');
 	box-shadow: 0 0 10px;
 	max-width:200;
 }
-#button_members
+#button_news
 {
 	position:absolute;
 	margin:10 200;
+	background:#4D65FD;
+	height:40;
+	top:60;
+	width:10%;
+	min-width:150;
+	box-shadow: 0 0 10px;
+	max-width:200;
+}
+#button_members
+{
+	position:absolute;
+	margin:10 400;
 	background:#4D65FD;
 	height:40;
 	top:60;
@@ -37,7 +49,7 @@ src: url('headfont.otf');
 #button_myCab
 {
 	position:absolute;
-	margin:10 400;
+	margin:10 600;
 	background:#4D65FD;
 	height:40;
 	top:60;
