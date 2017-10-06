@@ -96,7 +96,7 @@ $News=$sqlCon->query("SELECT * FROM News");
 $stat=array();
 while($rows=$News->fetch_assoc())
 {
-	array_push($stat, new sMain($rows["Head"],$rows["Content"]));
+	array_push($stat, new sMain($rows["Head"],$rows["Small_content"]));
 }
 
 
@@ -115,7 +115,7 @@ sorter($_GET['search']);
 </head>
 
 <body>
-
+<!-- начало тела -->
 
 
 <a href="index.php">
@@ -145,6 +145,8 @@ sorter($_GET['search']);
 	border: 16 solid black;
 	box-shadow: 0 0 10px;
 " id="search">
+
+
 <form method="get">
 <script>
 function Sclick(i)
@@ -158,7 +160,7 @@ function Sclick(i)
 <input name="search" type="text" onclick="Sclick(this);"
 
  value="поиск . . ." style="color:gray; width:100%; height:30; position:relative; margin:auto auto"/>
-<div id="search" onclick="document.location.href="itb"" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;"><img style="position:relative; margin:auto auto; width:30; height:30;" src="/search.png"/></div>
+<div id="search" onclick="document.location.href="" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;"><img style="position:relative; margin:auto auto; width:30; height:30;" src="/images/search.png"/></div>
 
 </form>
 </div>
@@ -178,7 +180,6 @@ echo "<div style=\" background:#6B7DF5; width:-1; height:35; box-shadow: 0 0 10p
 	echo "</div>";
 	
 echo "</div>";
-$k=new User();
 }
 ?>
 

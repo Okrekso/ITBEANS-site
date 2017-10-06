@@ -21,3 +21,6 @@ INSERT INTO Users (Login,Pass,Level,Status)
 VALUES ('Admin','admin',100,'Gold');
 INSERT INTO News(Creator_ID,Head,Content)
 VALUES (1,'Создание сайта','Сайт был успешно создан!');
+
+ALTER TABLE News ADD Small_content varchar(70);
+UPDATE News SET Small_content='сайт було створено і це маленьке повідомлення про це!', Content='сайт було створено і це дуже велике! повідомлення про це!' WHERE ID=1;

@@ -61,7 +61,8 @@ src: url('/pages/fonts/headfont.otf');
 #shapka_fon
 {
 	position:absolute;
-	background:#6B7DF5;
+	background:rgb(101, 116, 216);
+	background-image: url(images/beans_bg.png);
 	left:0;
 	right:0;
 	top:20;
@@ -141,4 +142,11 @@ src: url('/pages/fonts/headfont.otf');
 	animation-fill-mode: forwards;
 	animation-name:anim;
 	animation-duration:2s;
+}
+
+.rideImg
+{
+	width:100%; left:0;
+	position: absolute; 
+	height:450;
 }

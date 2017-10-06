@@ -72,6 +72,7 @@ sorter($_GET['search']);
 <html>
 <head>
 <link rel="shortcut icon" href="/bean.ico" type="x-icon"/>
+<link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
 <link href="/pages/styles/style.css" rel="stylesheet" type="text/css"/>
 <title>IT B.E.A.N.S.</title>
 <meta charset="utf-8">
@@ -96,11 +97,16 @@ sorter($_GET['search']);
 
 <div margin-top="10" id="shapka_fon">
 <b class="head">IT B.E.A.N.S.</b>
-
 </div>
-<img src=""/>
-<div>
-	
+
+
+
+<div style="position:relative; top:200;">
+<img class="rideImg" src="/images/beans_bg_big.png"/>
+</div>
+
+<div aos="fade" style="position:absolute; width:100%; top:1000; left:0; rigth:0;">
+<img  src="/images/beans_bg.png"/>
 </div>
 
 </body>
