@@ -52,7 +52,19 @@ class sMain
 		}
 	}
 }
+class User
+{
+	public $Name;
+	public $Pass;
+	public $Facebook;
+	public $logined;
 
+	public function __construct()
+	{
+		echo
+		"<div style=\"position:fixed; width:150; heigth:150; background:black;\"></div>";
+	}
+}
 function sorter($str)
 {
 	$str=mb_strtolower($str,'UTF-8');
@@ -78,8 +90,16 @@ function sorter($str)
 	}
 }
 
-$stat=[new sMain("Основание клуба","тут будет текст; а это типа картинка"), new sMain("Иерархия клуба","тратата"),
-new sMain("Дополнительные баллы","текст о баллах"), new sMain("Кодовый час","еще какой-то текст")];
+$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+$News=$sqlCon->query("SELECT * FROM News");
+
+$stat=array();
+while($rows=$News->fetch_assoc())
+{
+	array_push($stat, new sMain($rows["Head"],$rows["Content"]));
+}
+
+
 $statti=array_reverse($stat);
 
 
@@ -158,6 +178,7 @@ echo "<div style=\" background:#6B7DF5; width:-1; height:35; box-shadow: 0 0 10p
 	echo "</div>";
 	
 echo "</div>";
+$k=new User();
 }
 ?>
 
