@@ -118,16 +118,16 @@ sorter($_GET['search']);
 <!-- начало тела -->
 
 
-<a href="index.php">
+<a href="/pages/index.php">
 <div id="button_home" class="btn"><p class="btn_text" align="center">Главная</p></div>
 </a>
-<a href="members.php">
+<a href="/pages/members.php">
 <div id="button_members" class="btn"><p class="btn_text" align="center">Участники</p></div>
 </a>
-<a href="news.php">
+<a href="/pages/news.php">
 <div id="button_news" class="btn"><p class="btn_text" align="center">Новости</p></div>
 </a>
-<a href="accout.php">
+<a href="/pages/accout.php">
 <div id="button_myCab" class="btn"><p class="btn_text" align="center">Мой кабинет</p></div>
 </a>
 

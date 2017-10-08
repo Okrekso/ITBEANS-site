@@ -130,17 +130,19 @@ src: url('/pages/fonts/headfont.otf');
     from { background-color:#4D65FD; }
     to { background-color: #283272; }
 }
-#search:focus
+@-webkit-keyframes poyava 
 {
-	value:0;
+    0% { opacity:0; }
+    100% { opacity:1; }
 }
+
 
 .btn:hover, .btnS:hover
 {
 	cursor:pointer;
 	background-color:red;
 	animation-fill-mode: forwards;
-	animation-name:anim;
+	animation-name:poayava;
 	animation-duration:2s;
 }
 
