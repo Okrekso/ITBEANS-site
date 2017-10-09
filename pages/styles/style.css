@@ -9,6 +9,20 @@ font-family:HeaderText;
 src: url('/pages/fonts/headfont.otf');	
 }
 
+.btn
+{
+	position:absolute;
+	
+	margin:10 10;
+	background:#4D65FD;
+	height:40;
+	top:60;
+	width:15%;
+	min-width:180;
+	box-shadow: 0 0 10px;
+	max-width:200;
+}
+/*
 #button_home
 {
 	position:absolute;
@@ -16,7 +30,7 @@ src: url('/pages/fonts/headfont.otf');
 	background:#4D65FD;
 	height:40;
 	top:60;
-	width:10%;
+	width:15%;
 	min-width:150;
 	box-shadow: 0 0 10px;
 	max-width:200;
@@ -28,7 +42,7 @@ src: url('/pages/fonts/headfont.otf');
 	background:#4D65FD;
 	height:40;
 	top:60;
-	width:10%;
+	width:15%;
 	min-width:150;
 	box-shadow: 0 0 10px;
 	max-width:200;
@@ -40,7 +54,7 @@ src: url('/pages/fonts/headfont.otf');
 	background:#4D65FD;
 	height:40;
 	top:60;
-	width:10%;
+	width:15%;
 	min-width:150px;
 	box-shadow: 0 0 10px;
 	max-width:200;
@@ -58,6 +72,7 @@ src: url('/pages/fonts/headfont.otf');
 	box-shadow: 0 0 10px;
 	max-width:300;
 }
+*/
 #shapka_fon
 {
 	position:absolute;
@@ -96,6 +111,7 @@ src: url('/pages/fonts/headfont.otf');
 	-webkit-user-select:none;
 	margin:0 0;
 	font-size:30;
+	min-width: 100;
 	font-family:HeaderText;
 	Color:white;
 }
@@ -125,24 +141,24 @@ src: url('/pages/fonts/headfont.otf');
 	Color:Black;
 }
 
-@keyframes anim 
+@keyframes color_anim 
 {
     from { background-color:#4D65FD; }
     to { background-color: #283272; }
 }
-@-webkit-keyframes poyava 
+@keyframes poyava_anim
 {
-    0% { opacity:0; }
-    100% { opacity:1; }
+    from { opacity:0 }
+    to { opacity:1 }
 }
 
 
 .btn:hover, .btnS:hover
 {
 	cursor:pointer;
-	background-color:red;
+	background-color:#4D65FD;
 	animation-fill-mode: forwards;
-	animation-name:poayava;
+	animation-name:color_anim;
 	animation-duration:2s;
 }
 

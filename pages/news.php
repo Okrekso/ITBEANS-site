@@ -116,19 +116,19 @@ sorter($_GET['search']);
 
 <body>
 <!-- начало тела -->
-
+<script src="/anims.js" type="text/javascript"></script>
 
 <a href="/pages/index.php">
-<div id="button_home" class="btn"><p class="btn_text" align="center">Главная</p></div>
+<div id="button_home" style="margin:10 12%;" class="btn"><p class="btn_text" align="center">Главная</p></div>
 </a>
 <a href="/pages/members.php">
-<div id="button_members" class="btn"><p class="btn_text" align="center">Участники</p></div>
+<div id="button_members" style="margin:10 32%;" class="btn"><p class="btn_text" align="center">Участники</p></div>
 </a>
 <a href="/pages/news.php">
-<div id="button_news" class="btn"><p class="btn_text" align="center">Новости</p></div>
+<div id="button_news" style="margin:10 52%;" class="btn"><p class="btn_text" align="center">Новости</p></div>
 </a>
 <a href="/pages/accout.php">
-<div id="button_myCab" class="btn"><p class="btn_text" align="center">Мой кабинет</p></div>
+<div id="button_myCab" style="margin:10 72%;" class="btn"><p class="btn_text" align="center">Мой кабинет</p></div>
 </a>
 
 <div margin-top="10" id="shapka_fon">
@@ -147,7 +147,7 @@ sorter($_GET['search']);
 " id="search">
 
 
-<form method="get">
+<form id="searcher" method="get">
 <script>
 function Sclick(i)
 {
@@ -158,12 +158,15 @@ function Sclick(i)
 }
 </script>
 <input name="search" type="text" onclick="Sclick(this);"
-
  value="поиск . . ." style="color:gray; width:100%; height:30; position:relative; margin:auto auto"/>
-<div id="search" onclick="document.location.href="" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;"><img style="position:relative; margin:auto auto; width:30; height:30;" src="/images/search.png"/></div>
 
-</form>
+<div id="search" onclick="searchStart();" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;">
+<img 
+style="position:relative; margin:auto auto; width:30; height:30;"
+ src="/images/search.png"/>
 </div>
+</div>
+</form>
 
 <?php
 
