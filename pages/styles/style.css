@@ -22,57 +22,25 @@ src: url('/pages/fonts/headfont.otf');
 	box-shadow: 0 0 10px;
 	max-width:200;
 }
-/*
-#button_home
+
+#button_home::after
 {
-	position:absolute;
-	margin:10 10;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:15%;
-	min-width:150;
-	box-shadow: 0 0 10px;
-	max-width:200;
+	content:"главная";
 }
-#button_news
+#button_news::after
 {
-	position:absolute;
-	margin:10 200;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:15%;
-	min-width:150;
-	box-shadow: 0 0 10px;
-	max-width:200;
+	content:"новости";
 }
-#button_members
+#button_members::after
 {
-	position:absolute;
-	margin:10 400;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:15%;
-	min-width:150px;
-	box-shadow: 0 0 10px;
-	max-width:200;
+	content:"участники";
 }
 
-#button_myCab
+#button_myCab::after
 {
-	position:absolute;
-	margin:10 600;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:15%;
-	min-width:250px;
-	box-shadow: 0 0 10px;
-	max-width:300;
+	content:"мой кабинет";
 }
-*/
+
 #shapka_fon
 {
 	position:absolute;

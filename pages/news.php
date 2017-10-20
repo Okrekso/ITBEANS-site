@@ -109,31 +109,24 @@ sorter($_GET['search']);
 <html>
 <head>
 <link rel="shortcut icon" href="/bean.ico" type="x-icon"/>
+<link href="/animate.css" rel="stylesheet">
+<link href="/anims.js" rel="stylesheet"/>
 <link href="/pages/styles/style.css" rel="stylesheet" type="text/css"/>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
 <title>IT B.E.A.N.S.</title>
 <meta charset="utf-8">
 </head>
 
 <body>
 <!-- начало тела -->
-<script src="/anims.js" type="text/javascript"></script>
-
-<a href="/pages/index.php">
-<div id="button_home" style="margin:10 12%;" class="btn"><p class="btn_text" align="center">Главная</p></div>
-</a>
-<a href="/pages/members.php">
-<div id="button_members" style="margin:10 32%;" class="btn"><p class="btn_text" align="center">Участники</p></div>
-</a>
-<a href="/pages/news.php">
-<div id="button_news" style="margin:10 52%;" class="btn"><p class="btn_text" align="center">Новости</p></div>
-</a>
-<a href="/pages/accout.php">
-<div id="button_myCab" style="margin:10 72%;" class="btn"><p class="btn_text" align="center">Мой кабинет</p></div>
-</a>
-
-<div margin-top="10" id="shapka_fon">
-<b class="head">IT B.E.A.N.S.</b>
-</div>
+<script src="/pages/javascript/initials.js" type="text/javascript"></script>
+<div id="head"></div>
+<script> 
+setHeader();
+</script> 
+	
+	
 
 <div style="
 	position:relative;
