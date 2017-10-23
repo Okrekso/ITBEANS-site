@@ -10,6 +10,10 @@ var collisions=new Array(document.getElementsByClassName("scrollable").length);
         animations[i]="";
     }
 
+function getDirs()
+{
+    return animated.length;
+}
 function setDir(ID, dir, pixels, radius)
 {
     animations[ID]=dir;
