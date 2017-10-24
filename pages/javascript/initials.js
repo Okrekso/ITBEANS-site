@@ -12,7 +12,6 @@ var acc_open=0;
 function accountTip()
 {
     var elem=document.getElementsByClassName("acc_menu");
-
     if(acc_open==0)
     {
     for(i=0;i<elem.length;i++)
@@ -23,7 +22,7 @@ function accountTip()
         $(elem[i]).animate({top:"+=100", opacity: i==0 ? "0.4" : "1"},1000);
     }
     acc_open=1;
-
+    
         if(chekFBlogin()==1)
         {
         document.getElementById("fb_button").style.display="none";

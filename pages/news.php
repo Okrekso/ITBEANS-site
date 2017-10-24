@@ -121,16 +121,10 @@ sorter($_GET['search']);
 <body>
 <!-- начало тела -->
 <script src="/pages/javascript/initials.js" type="text/javascript"></script>
-<div id="head"></div>
-<script> 
-setHeader();
-</script> 
-	
-	
 
 <div style="
 	position:relative;
-	top:130;
+	top:200;
 	background:white;
 	width:90%;
 	margin:0 auto;
@@ -168,7 +162,7 @@ for($i=0;$i<count($statti);$i++)
 {
 $zag=$statti[$i]->head;
 $cont=$statti[$i]->content;
-echo "<div style=\" min-width:600; margin:20 auto; top:130;\" class=\"main\" id=\"main_$i\">";
+echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=\"main_$i\">";
 
 echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \" ><p class=\"zagolovok\">$zag</p></div>";
 	echo "<p style=\"margin:10 5;\" class=\"text_S\">$cont</p>";
@@ -180,6 +174,11 @@ echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 1
 echo "</div>";
 }
 ?>
+
+<div id="head"></div>
+<script> 
+setHeader();
+</script> 
 
 </body>
 </html>
