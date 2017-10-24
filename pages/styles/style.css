@@ -78,7 +78,6 @@ src: url('/pages/fonts/headfont.otf');
 {
 	position:absolute;
 	background:#2d73d2;
-	background-image: url(images/beans_bg.png);
 	left:0;
 	right:0;
 	top:20;

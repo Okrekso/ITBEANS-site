@@ -1,6 +1,6 @@
 function setHeader()
 {
-    $("#head").load("/pages/header.html");
+    $("#head").load("/pages/header.php");
 }
 function searchStart()
 {
