@@ -6,9 +6,9 @@ class sMain
 	public $content;
 	public $picture;
 	public $point;
-	public function __construct($head, $content)
+	public function __construct($ID, $head, $content)
 	{
-		$this->head=$head; $this->content=$content;
+		$this->head=$head; $this->content=$content; $this->ID=$ID;
 		$this->point=0;
 	}
 
@@ -96,7 +96,7 @@ $News=$sqlCon->query("SELECT * FROM News");
 $stat=array();
 while($rows=$News->fetch_assoc())
 {
-	array_push($stat, new sMain($rows["Head"],$rows["Small_content"]));
+	array_push($stat, new sMain($rows["ID"],$rows["Head"],$rows["Small_content"]));
 }
 
 

@@ -22,7 +22,6 @@ function accountTip()
         $(elem[i]).animate({top:"+=100", opacity: i==0 ? "0.4" : "1"},1000);
     }
     acc_open=1;
-    
         if(chekFBlogin()==1)
         {
         document.getElementById("fb_button").style.display="none";
@@ -32,6 +31,11 @@ function accountTip()
         {
         document.getElementById("fb_button").style.display="block";
         document.getElementById("logout_button").style.display="none";
+        }
+        if(getCookie("userID")!="none")
+        {
+        document.getElementById("fb_button").style.display="none";
+        document.getElementById("logout_button").style.display="block";
         }
     }
 

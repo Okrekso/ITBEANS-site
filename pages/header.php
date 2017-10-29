@@ -1,5 +1,5 @@
 <a href="/pages/index.html">
-    
+
 <script src="/pages/javascript/accs.js" type="text/javascript"></script>
 <script src="/pages/javascript/initials.js" type="text/javascript"></script>
 
@@ -12,6 +12,7 @@
     <div style="margin:40 52%;" class="btn"><p id="button_news" class="btn_text" align="center"></p></div>
     </a>
     
+    
     <div id="button_myCab_bg" style="margin:40 72%;" onclick="accountTip();" class="btn">
 
         <p id="button_myCab" class="btn_text" align="center"></p>
@@ -22,7 +23,7 @@
         
         <div id="fb_button" class="fb-login-button" data-width="100%" style="display:none;" onclick="chekFB();" data-max-rows="1" data-size="small" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>                         
         <a id="logout_button" onclick="logOut();" style="display:none; visibility:visible; font-family:HeaderText; text-align:center; color: white; opacity:1;  width:100%; height:100; position:absolute; margin:auto auto;">выход</a>                
-
+        
         <div  onclick="fbLogin();" style="width:100%;height:20; position:absolute; top:0;"></div>
 
         </div>
@@ -42,10 +43,10 @@
         <div style="width:100; height:100; position:absolute; top:0; margin:20 -75; background:#225dae; transform:rotate(45deg);"></div>
         
     <a style="opacity:0.5; position:fixed; bottom:10; right:10; font-size:15; font-family:HeaderText;">
-        IT B.E.A.N.S. oficial site alpha v.0.7.8
+        IT B.E.A.N.S. oficial site alpha v.0.8.0
     </a>
 
-    <?php include "php/registration.php"?>
+    <?php include('php/registration.php'); ?>
     <?php
-    
+    chekUserRegistration();
     ?>

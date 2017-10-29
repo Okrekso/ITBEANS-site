@@ -50,18 +50,43 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 
 <!--билдинг новостей-->
 <?php  include "/php/newsShower.php"?>
+<?php  include "/php/registration.php"?>
+
+<form id="newsForm" type="get" action="showNews.html">
+<input name="newsID" id="newsID" type="text" style="display:none"></input>
+</form>
+
+<script type="text/javascript">
+	function goNews(id)
+	{
+	document.getElementById("newsID").value=id;
+	document.getElementById("newsForm").submit();
+	}
+</script>
+
 <?php
 
 for($i=0;$i<count($statti);$i++)
 {
 $zag=$statti[$i]->head;
 $cont=$statti[$i]->content;
+$id=$statti[$i]->ID;
+
 echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=\"main_$i\">";
 
-echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \" ><p class=\"zagolovok\">$zag</p></div>";
-	echo "<p style=\"margin:10 5;\" class=\"text_S\">$cont</p>";
+echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \"> <p class=\"zagolovok\">$zag</p>";
 	
-	echo "<div class=\"btnS\" style=\"width:200; position:absolute; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
+	if(getUserValue($_COOKIE["userID"],"Status")=="Gold")
+	{
+		echo "<div style=\" width:30; height:30; position:absolute; right:0; top:0; background:#0f2848; margin:2 2;\" id=\"deleteBtn\">";
+		echo "<div style=\"background:white; transform: rotate(45deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
+		echo "<div style=\"background:white; transform: rotate(135deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
+		echo "</div>";
+	}
+echo "</div>";
+echo "<p style=\"margin:10 5;\" class=\"text_S\">$cont</p>";
+
+	echo "<div class=\"btnS\" onclick=\"goNews($id);\" style=\"width:200; position:absolute; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 		echo "<a class=\"small_btn_text\">подробнее. . .</a>";
 	echo "</div>";
 	
