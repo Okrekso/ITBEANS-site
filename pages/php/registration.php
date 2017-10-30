@@ -5,10 +5,8 @@ function chekUserRegistration()
     $ID=$_COOKIE["userID"];
     $Name=$_COOKIE["userName"];
 
-    echo "<script>console.log(\"PHP: $ID | $Name\");</script>";
     if($ID!="none")
     {
-            echo "<script>console.log(\"PHP: $ID | $Name\");</script>";
         registrateUser($ID,$Name);
         setUserValue($ID,"Status","Gold");
         setUserValue($ID,"Level",100);
@@ -35,7 +33,7 @@ function getUserValue($UserID,$Value)
 {
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("SELECT $Value FROM Users WHERE Login='$UserID'");
-    if($result!=null) { $Xp=$result->fetch_assoc(); }
+    if($result!=null) { $sqlCon->close(); $Xp=$result->fetch_assoc(); }
 
     return $Xp["$Value"];
 }
@@ -43,7 +41,7 @@ function setUserValue($UserID,$ValueName, $Value)
 {
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("UPDATE Users SET $ValueName='$Value' WHERE Login='$UserID'");
-    if($result!=null) { return 1; }
+    if($result!=null) { $sqlCon->close(); return 1; }
     else { return 0; }
 }
 ?>

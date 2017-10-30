@@ -62,8 +62,27 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 	}
 </script>
 
+<form method="post" id="deleter">
+	<input type="text" style="display:none" id="toDelete" name="toDelete"></input>
+</form>
+
+<script>
+	function deletePost(Id)
+{
+    $("#toDelete").val(Id);
+    $("#deleter").submit();
+}
+</script>
+
 <?php
+$deleter=$_POST["toDelete"];
+
+if($deleter!=null)
+{
+	deleteNews($deleter);
+}
 fillNews();
+
 
 for($i=0;$i<count($statti);$i++)
 {
@@ -76,11 +95,10 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \"> <p class=\"zagolovok\">$zag</p>";
 	$k=getUserValue($_COOKIE["userID"],"Status");
 	$de=$_COOKIE["userID"];
-	echo "<script>console.log(\"status: $de \");</script>";
 
 	if(getUserValue($_COOKIE["userID"],"Status")=="Gold")
 	{
-		echo "<div id=\"deleteBtn\">";
+		echo "<div onclick=\"deletePost($id);\" id=\"deleteBtn\">";
 		echo "<div style=\"background:white; transform: rotate(45deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
 		echo "<div style=\"background:white; transform: rotate(135deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
 		echo "</div>";

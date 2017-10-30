@@ -1,7 +1,4 @@
-<?php include 'php/registration.php'?>
-<?php
-chekUserRegistration();
-?>
+
 
 <html>
 <head>
@@ -13,6 +10,8 @@ chekUserRegistration();
 <meta charset="utf-8">
 </head>
 
+<body>
+<?php include '/php/membersFill.php'?>
 
 <div id="head"></div>
 <script> 

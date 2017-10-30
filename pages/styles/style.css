@@ -145,6 +145,15 @@ src: url('/pages/fonts/headfont.otf');
 {
 	width:30; height:30; position:absolute; right:0; top:0; background:#0f2848; margin:2 2;
 }
+.memberBlock
+{
+	width:90%;
+	min-width: 800;
+	height:100;
+	position:relative;
+	background: #f0f0f0;
+	box-shadow: 0 0 10px #a1a1a1;
+}
 
 @keyframes color_anim 
 {

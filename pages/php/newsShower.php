@@ -119,11 +119,21 @@ function getNews($ID)
 	for($i=0;$i<count($statti);$i++)
 	{
 		$a=$statti[$i]->ID;
-		if($statti[$i]->ID==$ID){; return $statti[$i]; }
+		if($statti[$i]->ID==$ID){ return $statti[$i]; }
 	}
 
 	return "null";
 }
-
+function deleteNews($ID)
+{
+	fillNews();
+	global $statti;
+	$d=count($statti);
+	$g=$_POST["toDelete"];
+	
+	$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+	$Result=$sqlCon->query("DELETE FROM News WHERE ID=$ID");
+	if($Result!=null) { $_POST=array(); $sqlCon->close(); return 1; }
+}
 
 ?>
