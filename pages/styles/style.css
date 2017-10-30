@@ -141,11 +141,20 @@ src: url('/pages/fonts/headfont.otf');
 	font-family:HeaderText;
 	Color:Black;
 }
+#deleteBtn
+{
+	width:30; height:30; position:absolute; right:0; top:0; background:#0f2848; margin:2 2;
+}
 
 @keyframes color_anim 
 {
     from { background-color:#245eac; }
     to { background-color: #183d6e; }
+}
+@keyframes color_anim_2 
+{
+    from { background-color:#0f2848; }
+    to { background-color: #911111; }
 }
 @keyframes poyava_anim
 {
@@ -153,6 +162,13 @@ src: url('/pages/fonts/headfont.otf');
     to { opacity:1 }
 }
 
+#deleteBtn:hover
+{
+	cursor:pointer;
+	animation-fill-mode: forwards;
+	animation-name:color_anim_2;
+	animation-duration:2s;
+}
 
 .btn:hover, .btnS:hover
 {

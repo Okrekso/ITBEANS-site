@@ -1,7 +1,7 @@
 <a href="/pages/index.html">
-
 <script src="/pages/javascript/accs.js" type="text/javascript"></script>
 <script src="/pages/javascript/initials.js" type="text/javascript"></script>
+
 
     <div style="margin:40 12%;" class="btn"><p id="button_home" class="btn_text" align="center"></p></div>
     </a>
@@ -22,7 +22,7 @@
         <div class="acc_menu" style="visibility:hidden; background:#4267b2; opacity:1;  width:100%; height:20; position:absolute; margin:140 0;">
         
         <div id="fb_button" class="fb-login-button" data-width="100%" style="display:none;" onclick="chekFB();" data-max-rows="1" data-size="small" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>                         
-        <a id="logout_button" onclick="logOut();" style="display:none; visibility:visible; font-family:HeaderText; text-align:center; color: white; opacity:1;  width:100%; height:100; position:absolute; margin:auto auto;">выход</a>                
+        <a id="logout_button" style="display:none; visibility:visible; font-family:HeaderText; text-align:center; color: white; opacity:1;  width:100%; height:100; position:absolute; margin:auto auto;">выход</a>                
         
         <div  onclick="fbLogin();" style="width:100%;height:20; position:absolute; top:0;"></div>
 

@@ -1,5 +1,6 @@
 function setHeader()
 {
+    console.log("settings");
     $("#head").load("/pages/header.php");
 }
 function searchStart()
@@ -22,7 +23,8 @@ function accountTip()
         $(elem[i]).animate({top:"+=100", opacity: i==0 ? "0.4" : "1"},1000);
     }
     acc_open=1;
-        if(chekFBlogin()==1)
+    console.log("id="+$.cookie("userID"));
+        if(chekFBlogin()==1 || $.cookie("userID")!="none")
         {
         document.getElementById("fb_button").style.display="none";
         document.getElementById("logout_button").style.display="block";
@@ -31,11 +33,6 @@ function accountTip()
         {
         document.getElementById("fb_button").style.display="block";
         document.getElementById("logout_button").style.display="none";
-        }
-        if(getCookie("userID")!="none")
-        {
-        document.getElementById("fb_button").style.display="none";
-        document.getElementById("logout_button").style.display="block";
         }
     }
 

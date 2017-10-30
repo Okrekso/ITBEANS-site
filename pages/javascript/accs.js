@@ -19,7 +19,7 @@ window.fbAsyncInit = function() {
  function chekFBlogin()
  {
      var v=0;
-
+     
      FB.getLoginStatus(function(responce)
      {
          if(responce.status=="connected")
@@ -54,21 +54,24 @@ window.fbAsyncInit = function() {
 
  function fbLogin()
  {
-     if(chekFBlogin()==0 && getCookie("userID")=="none")
-     {
-        FB.login(function(responce){ chekRegistration();});
-     }
-    else
+
+    if(chekFBlogin()==0 && $.cookie("userID")=="none")
+    {
+        FB.login(function(responce){ chekRegistration(); });
+    }
+    if(chekFBlogin()==1 || $.cookie("userID")!="none")
     {
         logOut();
+        location.reload();
     }
+  
  }
  
  function logOut()
  {
-    if(chekFBlogin()==1) FB.logout(function(responce){});
-    document.cookie=("userID=none;");
-    document.cookie=("userName=none;");
+    if(chekFBlogin()==1) { FB.logout(function(responce){}); }
+    $.cookie("userID","none");
+    $.cookie("userName","none");
     console.log("user acc cookie deleted");
  }
  
@@ -78,18 +81,24 @@ window.fbAsyncInit = function() {
     {
         if(response && !response.error)
         {
-            document.cookie=("userID="+response.id);
-            document.cookie=("userName="+response.name);
-            console.log("user name: "+response.name);
+            var a=response.id, b=response.name;
+            $.cookie("userID",a);
+            $.cookie("userName",b);
+            //document.cookie=("userName="+response.name);
         }
         else { alert("there was an error while loggining"); console.log(response.error); }
     });
-    //document.getElementById("userID").value=getUserId();
  }
-
+/*
  function getCookie(name) 
  {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) return parts.pop().split(";").shift();
  }
+ function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}*/

@@ -1,14 +1,17 @@
 <?php 
+global $statti,$stat;
+
 class sMain
 {
 	public $ID;
 	public $head;
 	public $content;
+	public $smallContent;
 	public $picture;
 	public $point;
-	public function __construct($ID, $head, $content)
+	public function __construct($ID, $head, $content, $smallContent)
 	{
-		$this->head=$head; $this->content=$content; $this->ID=$ID;
+		$this->head=$head; $this->content=$content; $this->ID=$ID; $this->smallContent=$smallContent;
 		$this->point=0;
 	}
 
@@ -90,19 +93,37 @@ function sorter($str)
 	}
 }
 
+function fillNews()
+{
+global $statti,$stat;
 $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
 $News=$sqlCon->query("SELECT * FROM News");
 
 $stat=array();
 while($rows=$News->fetch_assoc())
 {
-	array_push($stat, new sMain($rows["ID"],$rows["Head"],$rows["Small_content"]));
+	array_push($stat, new sMain($rows["ID"],$rows["Head"],$rows["Content"],$rows["Small_content"]));
+}
+$statti=array_reverse($stat);
+
+sorter($_GET['search']);
+}
+
+function getNews($ID)
+{
+	fillNews();
+	global $statti;
+	$d=count($statti);
+	$g=$_GET["newsID"];
+	
+	for($i=0;$i<count($statti);$i++)
+	{
+		$a=$statti[$i]->ID;
+		if($statti[$i]->ID==$ID){; return $statti[$i]; }
+	}
+
+	return "null";
 }
 
 
-$statti=array_reverse($stat);
-
-
-
-sorter($_GET['search']);
 ?>

@@ -4,9 +4,14 @@ function chekUserRegistration()
 {
     $ID=$_COOKIE["userID"];
     $Name=$_COOKIE["userName"];
+
+    echo "<script>console.log(\"PHP: $ID | $Name\");</script>";
     if($ID!="none")
     {
+            echo "<script>console.log(\"PHP: $ID | $Name\");</script>";
         registrateUser($ID,$Name);
+        setUserValue($ID,"Status","Gold");
+        setUserValue($ID,"Level",100);
     }
 }
 
@@ -15,12 +20,13 @@ function registrateUser($UserID,$UserName)
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("SELECT * FROM Users WHERE Login='$UserID'");
     $User=$result->fetch_assoc();
-
+    
     if(count($User)==0)
     {
+        
         $Querry="INSERT into Users(Login, Level, Status, Name) VALUES ($UserID,0,'unaccepted','$UserName')";
         
-        if($sqlCon->query($Querry)) { $sqlCon->close(); return 1; }
+        if($sqlCon->query($Querry)) { echo "<script>console.log(\" registration seccessful \");</script>"; $sqlCon->close(); return 1; }
     }
     else { $sqlCon->close(); return 0; }
 }
