@@ -92,8 +92,9 @@ $id=$statti[$i]->ID;
 
 echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=\"main_$i\">";
 
-echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \"> <p class=\"zagolovok\">$zag</p>";
-	$k=getUserValue($_COOKIE["userID"],"Status");
+	//голвоа
+	echo "<div onclick=\"goNews($id);\" style=\"cursor:pointer; background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \"> <p class=\"zagolovok\">$zag</p>";
+	//$k=getUserValue($_COOKIE["userID"],"Status");
 	$de=$_COOKIE["userID"];
 
 	if(getUserValue($_COOKIE["userID"],"Status")=="Gold")
@@ -103,13 +104,27 @@ echo "<div style=\" background:#245eac; width:100%; height:35; box-shadow: 0 0 1
 		echo "<div style=\"background:white; transform: rotate(135deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
 		echo "</div>";
 	}
-echo "</div>";
-echo "<p style=\"margin:10 5;\" class=\"text_S\">$cont</p>";
+	echo "</div>";
+	//конец головы
+	
+	echo "<p style=\"margin:10 5;\" class=\"text_S\">$cont</p>";
 
-	echo "<div class=\"btnS\" onclick=\"goNews($id);\" style=\"width:200; position:absolute; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
+	//кнопки
+	echo "<div style=\"position:absolute; bottom:5;\">";
+
+	echo "<div class=\"btnS\" onclick=\"goNews($id);\" style=\"width:200; margin:0 0; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 		echo "<a class=\"small_btn_text\">подробнее. . .</a>";
 	echo "</div>";
-	
+	if(getSqlValueById($id,"Type","News")=="Event")
+	{
+	echo "<div class=\"btnS\" onclick=\"\" style=\"width:275; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
+	echo "<a class=\"small_btn_text\">зарегистрироваться</a>";
+	echo "</div>";
+	}
+	echo "</div>";
+
+	echo "<a class=\"text_S\" style=\"position:absolute; right:0; bottom:0; opacity:0.5;\">author</a>";
+
 echo "</div>";
 
 }

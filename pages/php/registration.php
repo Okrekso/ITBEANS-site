@@ -32,7 +32,15 @@ function registrateUser($UserID,$UserName)
 function getUserValue($UserID,$Value)
 {
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
-    $result=$sqlCon->query("SELECT $Value FROM Users WHERE Login='$UserID'");
+    $result=$sqlCon->query("SELECT $Value FROM `Users` WHERE Login='$UserID'");
+    if($result!=null) { $sqlCon->close(); $Xp=$result->fetch_assoc(); }
+
+    return $Xp["$Value"];
+}
+function getSqlValueById($ID,$Value,$Table)
+{
+    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $result=$sqlCon->query("SELECT $Value FROM $Table WHERE ID='$ID'");
     if($result!=null) { $sqlCon->close(); $Xp=$result->fetch_assoc(); }
 
     return $Xp["$Value"];
