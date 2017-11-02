@@ -1,30 +1,44 @@
-<a href="/pages/index.html">
-<script src="/pages/javascript/accs.js" type="text/javascript"></script>
-<script src="/pages/javascript/initials.js" type="text/javascript"></script>
+    <script src="/pages/javascript/accs.js" type="text/javascript"></script>
+    <script src="/pages/javascript/initials.js" type="text/javascript"></script>
+
+    <a href="/pages/index.html">
+    <?php include_once '/php/registration.php'?>
 
     <div style="margin:40 12%;" class="btn"><p id="button_home" class="btn_text" align="center"></p></div>
     </a>
+    
     <a href="/pages/members.php">
     <div style="margin:40 32%;" class="btn"><p id="button_members" class="btn_text" align="center"></p></div>
     </a>
-    <a href="/pages/news.php">
-    <div style="margin:40 52%;" class="btn"><p id="button_news" class="btn_text" align="center"></p></div>
-    </a>
+
+    <div style="margin:40 52%;" id="button_news_bg" onmouseenter="newsTip();" class="btn">
+        <p id="button_news" class="btn_text" align="center"></p>
+        <div onmousedown="gotoNews();" style="position:absolute; top:0; width:100%;height:100%;"></div>
+        <?php
+        if(getUserValue($_COOKIE["userID"],"Status")=="Gold" || getUserValue($_COOKIE["userID"],"Status")=="Orange")
+        {
+        echo "<div id=\"button_news_window\" class=\"news_menu\" style=\"visibility:hidden; background-color:rgba(0,0,0,0.99); width:100%; height:20; position:absolute; margin:40 0;\">";
+        echo "</div>";
+        echo "<div style=\"width:100%;\" onmousedown=\"gotoNewPost();\" class=\"news_menu menu_element\">";
+            echo "<a class=\"text_S\" style=\"position:absolute; width:100%; text-align:center; margin:0 auto; color:white;\">новий пост</a>";
+        echo "</div>";
+        }
+        ?>
+    </div>
     
     <script type="text/javascript" src="/pages/javascript/jquery.cookie.js"></script>
-    <div id="button_myCab_bg" style="margin:40 72%;" class="btn">
+    <div id="button_myCab_bg" onmouseenter="accountTip();" style="margin:40 72%;" class="btn">
     
         <p id="button_myCab" class="btn_text" align="center"></p>
-        <div id="button_myCab_clicker" onclick="accountTip();" style="position:absolute; top:0; width:100%;height:100%;"></div>
+        <div id="button_myCab_clicker" style="position:absolute; top:0; width:100%;height:100%;"></div>
         
-        <div id="button_myCab_window" class="acc_menu" style="visibility:hidden; background: black; opacity:0.4;  width:100%; height:100; position:absolute; margin:40 0;"></div>
+        <div id="button_myCab_window" class="acc_menu" style="visibility:hidden; background: black; background-color:rgba(0,0,0,0.99);  width:100%; height:100; position:absolute; margin:40 0;"></div>
         <a class="acc_menu" style="visibility:hidden; font-family:HeaderText; text-align:center; color: white; opacity:1;  width:100%; height:80; position:absolute; margin:40 0;">з метою достовірності введених даних авторізація доступна лише за допомогою фейсбука</a>
-
         
 
         <div class="acc_menu" style="visibility:hidden; background:#4267b2; opacity:1;  width:100%; height:20; position:absolute; margin:140 0;">
         
-        <?php include_once '/php/registration.php'?>
+        
         <?php 
         if(getUserValue($_COOKIE["userID"],"Status")=="Gold")
         {
@@ -32,7 +46,6 @@
             echo "<a id=\"myEvents_button\" class=\"logout_text acc_menu\">мої події</a>";
             echo "<div onclick=\"gotoMyEvents();\" style=\" width:100%; height:20; position:absolute; top:0\"></div>";    
         echo "</div>";
-        
         }
         else {echo "<a id=\"myEvents_button\"></a>";}
         ?>

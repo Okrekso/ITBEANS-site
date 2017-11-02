@@ -19,7 +19,7 @@ src: url('/pages/fonts/headfont.otf');
 	top:60;
 	width:15%;
 	min-width:180;
-	box-shadow: 0 0 10px;
+	box-shadow: 0 0 10px #5d5d5d;
 	max-width:200;
 }
 .mainImg
@@ -145,15 +145,6 @@ src: url('/pages/fonts/headfont.otf');
 {
 	width:30; height:30; position:absolute; right:0; top:0; background:#0f2848; margin:2 2;
 }
-
-#triangle-down {
-	width: 0;
-	height: 0;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	border-top: 100px solid red;
-}
-
 .memberBlock
 {
 	width:90%;
@@ -177,7 +168,14 @@ src: url('/pages/fonts/headfont.otf');
 	position:absolute;
 	margin:auto auto;
 }
-
+.menu_element
+{
+	position:absolute; margin:40 0;
+	visibility:hidden; width:100%;
+	height:20; background:#4172b1;
+	opacity:1;
+	box-shadow:0 0 10px #727272;
+}
 @keyframes color_anim 
 {
     from { background-color:#245eac; }

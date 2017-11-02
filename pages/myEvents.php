@@ -34,7 +34,6 @@
                     {
                     $d=$user["UserID"];
                     $userName=getSqlValueById($user["UserID"], "Name","Users");
-                    echo "<script>console.log(\"> $d\");</script>";
                     echo "<div style=\"width:100%; height:25; background:white; box-shadow:0 0 10px #a1a1a1; opacity:1;\">";
                     echo "<a class=\"text_S\" style=\"color:black;\">";
                     echo "$userName";

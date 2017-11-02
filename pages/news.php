@@ -44,6 +44,7 @@ style="position:relative; margin:auto auto; width:30; height:30;"
  src="/images/search.png"/>
 </div>
 </div>
+
 </form>
 
 <!--билдинг новостей-->

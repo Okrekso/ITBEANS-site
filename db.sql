@@ -30,11 +30,6 @@ CREATE TABLE Visitors
     Additional INT
 );
 
-INSERT INTO Users (Login,Level,Status,Name)
-VALUES ('Admin',100,'Gold','Admin');
-INSERT INTO News(Creator_ID,Head,Content)
-VALUES (1,'Создание сайта','Сайт был успешно создан!');
-
 CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW BEGIN SET NEW.`CreateDate`= NOW(); END;
 
 CREATE TRIGGER `Updater` BEFORE UPDATE ON `Users` FRO EACH ROW BEGIN
