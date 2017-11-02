@@ -42,7 +42,6 @@ function getSqlValueById($ID,$Value,$Table)
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("SELECT $Value FROM $Table WHERE ID='$ID'");
     if($result!=null) { $sqlCon->close(); $Xp=$result->fetch_assoc(); }
-
     return $Xp["$Value"];
 }
 function setUserValue($UserID,$ValueName, $Value)

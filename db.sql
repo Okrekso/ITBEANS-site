@@ -12,11 +12,22 @@ CREATE TABLE Users
 CREATE TABLE News
 (
     ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Creator_ID INT, FOREIGN KEY(Creator_ID) REFERENCES Users(ID),
+    Creator_ID INT,
     Head varchar(80) NOT NULL,
     Content text,
     Small_content text,
-    Type varchar(100);
+    Type varchar(100),
+    CreateDate date,
+    StartDate date;
+);
+
+CREATE TABLE Visitors
+(
+    ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    NewsID INT, FOREIGN KEY(NewsID) REFERENCES `News`(`ID`),
+    Visited INT,
+    Additional INT
 );
 
 INSERT INTO Users (Login,Level,Status,Name)
@@ -24,8 +35,9 @@ VALUES ('Admin',100,'Gold','Admin');
 INSERT INTO News(Creator_ID,Head,Content)
 VALUES (1,'Создание сайта','Сайт был успешно создан!');
 
+CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW BEGIN SET NEW.`CreateDate`= NOW(); END;
 
-BEGIN
+CREATE TRIGGER `Updater` BEFORE UPDATE ON `Users` FRO EACH ROW BEGIN
 IF NEW.Level<30
 THEN
 SET NEW.`Status`='Green';
@@ -43,5 +55,4 @@ IF NEW.Level>90
 THEN
 SET NEW.`Status`='Gold';
 END IF;
-
-END
+END;

@@ -29,14 +29,14 @@
 <script>
 function Sclick(i)
 {
-	if(i.value=="поиск . . .")
+	if(i.value=="пошук . . .")
 	{
 		i.value="";
 	}
 }
 </script>
 <input name="search" type="text" onclick="Sclick(this);"
- value="поиск . . ." style="color:gray; width:100%; height:30; position:relative; margin:auto auto"/>
+ value="пошук . . ." style="color:gray; width:100%; height:30; position:relative; margin:auto auto"/>
 
 <div id="search" onclick="searchStart();" style="background:#4D65FD; box-shadow: 0 0 10px; width:30; position:relative; margin: -30 100%; height:30;">
 <img 
@@ -93,7 +93,7 @@ $id=$statti[$i]->ID;
 echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=\"main_$i\">";
 
 	//голвоа
-	echo "<div onclick=\"goNews($id);\" style=\"cursor:pointer; background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \"> <p class=\"zagolovok\">$zag</p>";
+	echo "<div  style=\"cursor:pointer; background:#245eac; width:100%; height:35; box-shadow: 0 0 10px; \"> <p onclick=\"goNews($id);\" class=\"zagolovok\">$zag</p>";
 	//$k=getUserValue($_COOKIE["userID"],"Status");
 	$de=$_COOKIE["userID"];
 
@@ -113,17 +113,21 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 	echo "<div style=\"position:absolute; bottom:5;\">";
 
 	echo "<div class=\"btnS\" onclick=\"goNews($id);\" style=\"width:200; margin:0 0; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
-		echo "<a class=\"small_btn_text\">подробнее. . .</a>";
+		echo "<a class=\"small_btn_text\" style=\"position:absolute; margin:0 40;\">більше . . .</a>";
 	echo "</div>";
 	if(getSqlValueById($id,"Type","News")=="Event")
 	{
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:275; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
-	echo "<a class=\"small_btn_text\">зарегистрироваться</a>";
+	echo "<a class=\"small_btn_text\" style=\"position:absolute; margin:0 40;\">зареєструватись</a>";
 	echo "</div>";
 	}
 	echo "</div>";
 
-	echo "<a class=\"text_S\" style=\"position:absolute; right:0; bottom:0; opacity:0.5;\">author</a>";
+	$AuthID=getSqlValueById($id, "Creator_ID","News");
+	$Auth=getSqlValueById($AuthID,"Name","Users");
+	$DateOfCreate=getSqlValueById($id,"CreateDate","News");
+	echo "<a class=\"text_S\" style=\"position:absolute; right:0; bottom:15; opacity:0.5;\">$DateOfCreate</a>";
+	echo "<a class=\"text_S\" style=\"position:absolute; right:0; bottom:0; opacity:0.5;\">$Auth</a>";
 
 echo "</div>";
 

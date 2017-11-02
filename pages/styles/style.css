@@ -58,20 +58,20 @@ src: url('/pages/fonts/headfont.otf');
 
 #button_home::after
 {
-	content:"главная";
+	content:"головна";
 }
 #button_news::after
 {
-	content:"новости";
+	content:"новини";
 }
 #button_members::after
 {
-	content:"участники";
+	content:"учасники";
 }
 
 #button_myCab::after
 {
-	content:"мой кабинет";
+	content:"мій кабінет";
 }
 
 #shapka_fon
@@ -145,6 +145,15 @@ src: url('/pages/fonts/headfont.otf');
 {
 	width:30; height:30; position:absolute; right:0; top:0; background:#0f2848; margin:2 2;
 }
+
+#triangle-down {
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid red;
+}
+
 .memberBlock
 {
 	width:90%;
@@ -152,7 +161,21 @@ src: url('/pages/fonts/headfont.otf');
 	height:100;
 	position:relative;
 	background: #f0f0f0;
+	margin:auto auto;
 	box-shadow: 0 0 10px #a1a1a1;
+}
+.logout_text
+{
+	display:none;
+	visibility:visible; 
+	font-family:HeaderText; 
+	text-align:center; 
+	color: white; 
+	opacity:1;  
+	width:100%; 
+	height:20;
+	position:absolute;
+	margin:auto auto;
 }
 
 @keyframes color_anim 

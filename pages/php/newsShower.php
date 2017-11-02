@@ -105,7 +105,7 @@ while($rows=$News->fetch_assoc())
 	array_push($stat, new sMain($rows["ID"],$rows["Head"],$rows["Content"],$rows["Small_content"]));
 }
 $statti=array_reverse($stat);
-
+$sqlCon->close();
 sorter($_GET['search']);
 }
 
