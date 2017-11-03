@@ -142,6 +142,7 @@ function switcher(element)
              element.onclick=function(){ switcher(element); }
         }); 
         switchers[num][1]=1;
+        document.getElementById("Type").value="1";
     }
     else
     {
@@ -152,5 +153,6 @@ function switcher(element)
              element.onclick=function(){ switcher(element); }
         }); 
         switchers[num][1]=0;
+        document.getElementById("Type").value="0";
     }
 }

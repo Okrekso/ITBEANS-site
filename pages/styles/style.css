@@ -22,6 +22,14 @@ src: url('/pages/fonts/headfont.otf');
 	box-shadow: 0 0 10px #5d5d5d;
 	max-width:200;
 }
+.btn_clear
+{
+	position:absolute;
+	
+	background:#245eac;
+	box-shadow: 0 0 10px #5d5d5d;
+	max-width:200;
+}
 .mainImg
 {
 	position:absolute;
@@ -200,7 +208,7 @@ src: url('/pages/fonts/headfont.otf');
 	animation-duration:2s;
 }
 
-.btn:hover, .btnS:hover
+.btn:hover, .btnS, .btn_clear:hover
 {
 	cursor:pointer;
 	background-color:#245eac;
