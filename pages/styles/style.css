@@ -138,7 +138,7 @@ src: url('/pages/fonts/headfont.otf');
 	margin:10 5;
 	font-size:25;
 	font-family:HeaderText;
-	Color:white;
+	Color:rgb(255, 255, 255);
 }
 
 
@@ -208,7 +208,7 @@ src: url('/pages/fonts/headfont.otf');
 	animation-duration:2s;
 }
 
-.btn:hover, .btnS, .btn_clear:hover
+.btn:hover, .btnS:hover, .btn_clear:hover
 {
 	cursor:pointer;
 	background-color:#245eac;

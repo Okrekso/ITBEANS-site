@@ -8,8 +8,6 @@ function chekUserRegistration()
     if($ID!="none")
     {
         registrateUser($ID,$Name);
-        setUserValue($ID,"Status","Gold");
-        setUserValue($ID,"Level",100);
     }
 }
 
@@ -22,7 +20,7 @@ function registrateUser($UserID,$UserName)
     if(count($User)==0)
     {
         
-        $Querry="INSERT into Users(Login, Level, Status, Name) VALUES ($UserID,0,'unaccepted','$UserName')";
+        $Querry="INSERT into Users(Login, Status, Name) VALUES ($UserID,'unaccepted','$UserName')";
         
         if($sqlCon->query($Querry)) { echo "<script>console.log(\" registration seccessful \");</script>"; $sqlCon->close(); return 1; }
     }
@@ -43,6 +41,28 @@ function getSqlValueById($ID,$Value,$Table)
     $result=$sqlCon->query("SELECT $Value FROM $Table WHERE ID='$ID'");
     if($result!=null) { $sqlCon->close(); $Xp=$result->fetch_assoc(); }
     return $Xp["$Value"];
+}
+
+function isOnEvent($userID,$eventID)
+{
+    echo "<script>console.log(\"event: $eventID\");</script>";
+    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $result=$sqlCon->query("SELECT * FROM `Visitors` WHERE `NewsID`='$eventID' AND `UserID`='$userID'");
+    if($result!=null) { $sqlCon->close(); $rows=$result->fetch_assoc(); $a=$rows["ID"]; if($rows["ID"]!=""){return 1;}else{return 0;} }
+    return 0;
+}
+
+function setSqlValue($ID,$ValueName,$Value,$Table)
+{
+    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $result=$sqlCon->query("UPDATE $Table SET $ValueName='$Value' WHERE ID='$ID';");
+    if($result==true) { $sqlCon->close(); return 1; }
+    else { return 0; }
+}
+
+function getUserStatus()
+{
+    return getUserValue($_COOKIE["userID"],"Status");
 }
 function setUserValue($UserID,$ValueName, $Value)
 {

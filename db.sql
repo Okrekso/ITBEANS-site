@@ -18,7 +18,7 @@ CREATE TABLE News
     Small_content text,
     Type varchar(100),
     CreateDate date,
-    StartDate date;
+    StartDate dateTime
 );
 
 CREATE TABLE Visitors
@@ -30,7 +30,14 @@ CREATE TABLE Visitors
     Additional INT
 );
 
-CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW BEGIN SET NEW.`CreateDate`= NOW(); END;
+CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW BEGIN
+SET NEW.`CreateDate`= NOW();
+
+IF NEW.`Price`<1
+THEN
+SET NEW.`Price`=1;
+END IF;
+END;
 
 CREATE TRIGGER `Updater` BEFORE UPDATE ON `Users` FRO EACH ROW BEGIN
 IF NEW.Level<30
@@ -50,4 +57,13 @@ IF NEW.Level>90
 THEN
 SET NEW.`Status`='Gold';
 END IF;
+END;
+
+CREATE TRIGGER `new_visitor` BEFORE INSERT ON `Visitors` FOR EACH ROW BEGIN
+IF NEW.`Additional` IS NULL
+THEN
+SET NEW.`Additional`=0;
+END IF;
+
+SET NEW.`Visited`=0;
 END;

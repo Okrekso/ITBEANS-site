@@ -1,8 +1,6 @@
 <html>
 <head>
 <link rel="shortcut icon" href="/bean.ico" type="x-icon"/>
-<link href="/animate.css" rel="stylesheet">
-<link href="/anims.js" rel="stylesheet"/>
 <link href="/pages/styles/style.css" rel="stylesheet" type="text/css"/>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
@@ -29,16 +27,16 @@
     
 <div style="position: relative; width:95%; margin:25 auto; height:90%; font-size: 20; font-family:HeaderText; word-wrap:break-word;">
 
-    <a id="content" style=" width:100%;">
+    <div id="content" style=" width:100%;">
     <?php $result=getNews($_GET["newsID"]); echo $result->content; ?>
-    </a>
+    </div>
     <?php include '/php/registration.php'?>
     <?php
     if(getSqlValueById($_GET["newsID"],"Type","News")=="Event")
     {
         echo "<div style=\"position:relative; margin:5 0; left:0;\">";
         echo "<div class=\"btnS\" onclick=\"\" style=\"width:275; margin:0 0; position:absolute; box-shadow: 0 0 10px;height:30; background:#245eac;\">";
-        echo "<a class=\"small_btn_text\">зарегистрироваться</a>";
+        echo "<a class=\"small_btn_text\" style=\"position:absolute;left:10%;\">зареєструватись</a>";
         echo "</div>";
         echo "</div>";
     } 

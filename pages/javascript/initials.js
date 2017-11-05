@@ -116,43 +116,122 @@ function hide(name,open)
         elem[i].style.visibility="hidden";
     }
 }
-function gotoMyEvents() { location.href="/pages/myEvents.php"; }
-function gotoNews() { location.href="/pages/news.php"; }
-function gotoNewPost() { location.href="/pages/newPost.php"; }
 
 var switchers=new Array();
-function switcher(element)
+function switchersAnims(Enable)
 {
-    element.onclick=function(){};
+    if(Enable==0)
+    {
+        for(i=0;i<switchers.length;i++)
+        {
+            var n=switchers[i][0];
+            var e=document.getElementById(n);
+            e.onclick=function(){};
+        }
+    }
+    else
+    {
+        for(i=0;i<switchers.length;i++)
+        {
+            var n=switchers[i][0];
+            console.log("n:"+n);
+            var e=document.getElementById(n);
+            e.onclick=function(){switcher(n);};
+        }
+    }
+}
+function switcher(elemID)
+{
     document.getElementsByClassName("switcher");
+    
+
+    elementName="#"+$("#"+elemID).attr('id');
+    elem=document.getElementById(elemID);
+    console.log(elemID);
 
     var exist=0; var num;
     for(i=0;i<switchers.length;i++)
     {
-        if(switchers[i][0]==element) { exist=1; num=i; break; }
+        if(switchers[i][0]==elemID) { exist=1; num=i; break; }
     }
-    if(exist!=1) { switchers.push(new Array(element.id,0)); num=0; }
+    if(exist!=1) { switchers.push(new Array(elemID,0)); console.log("created for"+elemID); num=switchers.length-1; }
     
     if(switchers[num][1]==0)
     {
-        $("#"+element.id).animate({float:"=left", width:"+=50%"},500,
+        switchersAnims(0);
+        $(elementName).animate({float:"=left", width:"+=50%"},500,
         function()
         {
-             $("#"+element.id).animate({marginLeft:"+=50%", width:"-=50%"},300); 
-             element.onclick=function(){ switcher(element); }
+            switchersAnims(0);
+            $(elementName).animate({marginLeft:"+=50%", width:"-=50%"},300); 
+            switchersAnims(1);
         }); 
         switchers[num][1]=1;
+        
+        if(elemID=="isEvent")
+        {
+        $("#Date").animate({opacity:"+=1"},500);
+        $("#Time").animate({opacity:"+=1"},500);
+        $("#Price").animate({opacity:"+=1"},500);
+        var d=new Date();
+        var date=d.getFullYear()+"-"+(d.getUTCMonth()+1<10?('0'+d.getUTCMonth()+1):d.getUTCMonth()+1)+"-"+(d.getDate()<10?'0'+d.getDate():d.getDate());
+        
+        var time=(d.getHours()<10?"0"+d.getHours():d.getHours())+":"+(d.getMinutes()<10?"0"+d.getMinutes():d.getMinutes());
+        $("#Date").val(date);
+        $("#Time").val(time);
         document.getElementById("Type").value="1";
+        }
     }
     else
     {
-        $("#"+element.id).animate({marginLeft:"-=50%", width:"+=50%"},500,
+        switchersAnims(0);
+        $(elementName).animate({marginLeft:"-=50%", width:"+=50%"},500,
         function()
         {
-             $("#"+element.id).animate({width:"-=50%"},300);
-             element.onclick=function(){ switcher(element); }
+            switchersAnims(0);
+            $(elementName).animate({width:"-=50%"},300);
+            switchersAnims(1);
         }); 
         switchers[num][1]=0;
+
+        if(elemID=="isEvent")
+        {
         document.getElementById("Type").value="0";
+        $("#Date").animate({opacity:"-=1"},500);
+        $("#Time").animate({opacity:"-=1"},500);
+        $("#Price").animate({opacity:"-=1"},500);
+        }
     }
 }
+
+function howFarToEvent(date)
+{
+    var d=new Date();
+    d.setMonth(d.getMonth()+1);
+    var newDate=date;
+    var res=(d-newDate)/1000/60/60/24;
+    res=res.toFixed();
+    return res<0?-res:res;
+}
+
+function acceptUser(num)
+{
+    $("#toAccept").val(num);
+    $("#acception").submit();
+}
+
+function registrateOnEvent(num)
+{
+    $("#toRegistr").val(num);
+    $("#registr").submit();
+}
+function deRegistrateOnEvent(num)
+{
+    $("#toDeregistr").val(num);
+    $("#registr").submit();
+}
+
+function gotoMyEvents() { location.href="/pages/myEvents.php"; }
+function gotoMembers() { location.href="/pages/members.php"; }
+function gotoNews() { location.href="/pages/news.php"; }
+function gotoNewPost() { location.href="/pages/newPost.php"; }

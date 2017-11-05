@@ -15,7 +15,7 @@
         <p id="button_news" class="btn_text" align="center"></p>
         <div onmousedown="gotoNews();" style="position:absolute; top:0; width:100%;height:100%;"></div>
         <?php
-        if(getUserValue($_COOKIE["userID"],"Status")=="Gold" || getUserValue($_COOKIE["userID"],"Status")=="Orange")
+        if(getUserStatus()!="Green" && getUserStatus()!="")
         {
         echo "<div id=\"button_news_window\" class=\"news_menu\" style=\"visibility:hidden; background-color:rgba(0,0,0,0.99); width:100%; height:20; position:absolute; margin:40 0;\">";
         echo "</div>";
@@ -40,7 +40,7 @@
         
         
         <?php 
-        if(getUserValue($_COOKIE["userID"],"Status")=="Gold")
+        if(getUserStatus()=="Gold")
         {
         echo "<div class=\"acc_menu\" style=\"visibility:hidden; background:#304e8d; opacity:1;  width:100%; height:20; position:absolute; margin:20 0;\">";
             echo "<a id=\"myEvents_button\" class=\"logout_text acc_menu\">мої події</a>";
@@ -72,7 +72,7 @@
         <div style="width:100; height:100; position:absolute; top:0; margin:20 -75; background:#225dae; transform:rotate(45deg);"></div>
         
     <a style="opacity:0.5; position:fixed; bottom:10; right:10; font-size:15; font-family:HeaderText;">
-        IT B.E.A.N.S. oficial site alpha v.0.9.2
+        IT B.E.A.N.S. oficial site alpha v.0.9.5
     </a>
 
     <?php
