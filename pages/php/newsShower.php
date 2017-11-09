@@ -18,13 +18,15 @@ class sMain
 
 	function howFar()
 	{
+	//if($this->startDate==null){ return "error"; }
 	$d=strtotime($this->startDate);
 	
 	$now=date("U");
 	$now=strtotime("-1 hour");
-
+	
 	$dif=($d-$now);
 	$dif=$dif/60;
+
 	return $dif;
 	}
 
@@ -121,7 +123,7 @@ function sorterEvents()
 	
 	if(count($events)>0)
 	{
-		$statti=array();
+	$statti=array();
 		
 	for($i=0;$i<count($events);$i++)
 	{
@@ -129,16 +131,16 @@ function sorterEvents()
 	{
 		if($d!=(count($events)-1) && $events[$d]->howFar()>$events[$d+1]->howFar())
 		{
-			$a=$d+1;
 			$temp=$events[$d];
 			$events[$d]=$events[$d+1];
 			$events[$d+1]=$temp;
 		}
 	}
 	}
-	$a=$events[0]->head;
+	
+	$example=$events[0]->howFar();
 	$a=0;
-	while($events[$a]->howFar()<0)
+	while($a<count($events) && $events[$a]->howFar()<0)
 	{
 	$a++;
 	}
@@ -199,8 +201,12 @@ function deleteNews($ID)
 	$g=$_POST["toDelete"];
 	
 	$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
-	$Result=$sqlCon->query("DELETE FROM News WHERE ID=$ID");
-	if($Result!=null) { $_POST=array(); $sqlCon->close(); return 1; }
+	$Result=$sqlCon->query("DELETE FROM `Visitors` WHERE NewsID=$ID");
+	if($Result!=null)
+	{
+		$Result=$sqlCon->query("DELETE FROM `News` WHERE ID=$ID");
+		if($Result!=null) { $_POST=array(); $sqlCon->close(); return 1; }
+	}
 }
 
 ?>

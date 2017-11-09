@@ -45,7 +45,6 @@ function getSqlValueById($ID,$Value,$Table)
 
 function isOnEvent($userID,$eventID)
 {
-    echo "<script>console.log(\"event: $eventID\");</script>";
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("SELECT * FROM `Visitors` WHERE `NewsID`='$eventID' AND `UserID`='$userID'");
     if($result!=null) { $sqlCon->close(); $rows=$result->fetch_assoc(); $a=$rows["ID"]; if($rows["ID"]!=""){return 1;}else{return 0;} }
@@ -70,5 +69,10 @@ function setUserValue($UserID,$ValueName, $Value)
     $result=$sqlCon->query("UPDATE Users SET $ValueName='$Value' WHERE Login='$UserID'");
     if($result!=null) { $sqlCon->close(); return 1; }
     else { return 0; }
+}
+
+function consoleLog($string)
+{
+    echo "<script>console.log(\"$string\");</script>";
 }
 ?>

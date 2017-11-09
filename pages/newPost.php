@@ -12,11 +12,7 @@
 <body>
 <!-- начало тела -->
 <script>
-function clearElem(element,val)
-{
-    if($("#"+element).val()==val){$("#"+element).val(""); return 0;}
-    if($("#"+element).val()==""){$("#"+element).val(val); return 1;}
-}
+
 function sendPost()
 {
     $("#form").submit();
@@ -24,19 +20,41 @@ function sendPost()
 </script>
 
 <script src="/pages/javascript/initials.js" type="text/javascript"></script>
-
+<script src="/pages/javascript/switchers.js" type="text/javascript"></script>
 
 <?php include_once '/php/registration.php'?>
 
+<!--загрузка данных в базу-->
 <?php
-if($_POST["Head"]!=null && getUserStatus()=="Gold")
+if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]!=null)
+{
+    echo "<script>alert(\"ready to edit!\");</script>";
+    $head=$_POST["Head"];
+    $small_content=$_POST["SmallText"];
+    $content=$_POST["BigText"];
+    $authorID=getUserValue($_COOKIE["userID"],"ID");
+    $type=$_POST["Type"];
+    $date=$_POST["Date"];
+    $time=$_POST["Time"];
+    $price=$_POST["Price"];
+    $newsID=$_GET["editID"];
+
+    $finalDate=$date." ".$time.":00";
+
+    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $result=$sqlCon->query("UPDATE News SET Head='$head', Content='$content', Small_content='$small_content',Type='$type',Creator_ID='$authorID',StartDate='$finalDate',Price='$price' WHERE `ID`='$newsID'");
+    
+    if($result==true){echo "<script>document.location.href=\"/pages/news.php\"</script>";}
+    else {echo "<script>console.log(\"errors while sending!\");</script>";}
+}
+if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]==null)
 {
     echo "<script>console.log(\"ready to send!\");</script>";
     $head=$_POST["Head"];
     $small_content=$_POST["SmallText"];
     $content=$_POST["BigText"];
     $authorID=getUserValue($_COOKIE["userID"],"ID");
-    $type=$_POST["Type"]==1?"Event":"News";
+    $type=$_POST["Type"];
     $date=$_POST["Date"];
     $time=$_POST["Time"];
     $price=$_POST["Price"];
@@ -50,6 +68,8 @@ if($_POST["Head"]!=null && getUserStatus()=="Gold")
 }
 ?>
 
+
+<!--тело-->
 <div id="all" style=<?php if(getUserStatus()!="Gold"){echo "\"filter: blur(13px);\"";}?>>
 
 <div id="elem" style="background:#f0f0f0; min-width:1000; height:480; top:200; width:90%; margin:0 auto; position:relative; ">
@@ -70,14 +90,14 @@ if($_POST["Head"]!=null && getUserStatus()=="Gold")
         <input id="Price" onfocusin="clearElem('Price','Бали за подію');" onfocusout="clearElem('Price','Бали за подію');" value="Бали за подію" name="Price" type="Text" style="opacity:0; width:150; height:25; position:absolute; margin:0 70%;"></input>
         </div>
     </form>
-    
+
     <div style="width:400; right:5%; height:20; position:absolute;">
 
     <div style=" width:200; height:20; right:200; position:absolute;">
         <a class="text_S" style="position:absolute; top:0; left:0%; color:black; margin:0 0;">Новина</a>
 
         <div style="position:relative; width:75; height:20; top:0; left:60; background:#c5c5c5;">
-            <div id="isEvent" class="switcher" onclick="switcher('isEvent');" style="cursor:pointer; width:50%; height:100%; background:#0f2848;"></div>
+            <div id="isEvent" class="isEvent" onclick="switcher('isEvent');" style="cursor:pointer; width:50%; height:100%; background:#0f2848;"></div>
         </div>
 
         <a class="text_S" style="position:absolute; top:0; left:145; color:black; margin:0 0;">Подія</a>
@@ -85,11 +105,49 @@ if($_POST["Head"]!=null && getUserStatus()=="Gold")
     </div>
 
     <div class="btn_clear" style="width:200; height:20; right:0;">
-    <a class="text_S" onclick="sendPost();" style="color:white; width:100%; position:absolute; margin:0 auto; text-align:center;">запостити</a>
+    <a class="text_S" onclick="sendPost();" style="color:white; width:100%; position:absolute; margin:0 auto; text-align:center;"><?php if($_GET["editID"]==null){ echo "запостити";}else {echo "зберегти";}?></a>
     </div>
 
     </div>
 </div>
+<script>
+setSwitcher('isEvent',0);
+</script>
+
+<script>
+    function fillFields(Zag,SmallText,BigText,Type,StartDate,Price)
+    {
+        //console.log(d);
+        Time=StartDate.split(" ")[1]; Dt=StartDate.split(" ")[0];
+        console.log(Time+"|"+Dt);
+        document.getElementById("Date").value=Dt;
+        $("#Time").val(Time);
+        
+        $("#Zag").val(Zag);
+        $("#SmallText").val(SmallText);
+        $("#BigText").val(BigText);
+        $("#Type").val(Type);
+        $('#Price').val(Price);
+        if(Type=='Event') {switchersIsEvent(0); setSwitcher('isEvent',1); }
+    }
+</script>
+<?php
+$ID=$_GET["editID"];
+if($ID!=null)
+{
+    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $result=$sqlCon->query("SELECT Head,Content,Type,Small_Content,StartDate,Price FROM `News` WHERE `ID`='$ID'");
+    $rows;
+    if($result!=null) {$rows=$result->fetch_assoc();}
+    if($rows!=null)
+    {
+        $head=$rows["Head"]; $SmallText=$rows["Small_Content"]; $BigText=$rows["Content"];
+        $Type=$rows["Type"]; $StartDate=$rows["StartDate"]; $Price=$rows["Price"];
+        echo "<script> fillFields('$head','$SmallText','$BigText','$Type','$StartDate','$Price'); </script>";
+    }
+}
+?>
+
 
 <script>
 var lastSize=$("#BigText").height();

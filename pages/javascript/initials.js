@@ -2,6 +2,7 @@ function setHeader()
 {
     $("#head").load("/pages/header.php");
 }
+
 function searchStart()
 {
     document.getElementById("searcher").submit();
@@ -106,101 +107,41 @@ function newsTip()
     news_open=0;
     }
 }
+function clearElem(element,val)
+{
+    if(element.split("_")[0]=="additional")
+    {
+        var additional=$("#"+element).val();
 
-function hide(name,open)
+        var news=element.split("_")[1].split("-")[0]; var user=element.split("_")[1].split("-")[1];
+        strs=$("#toVisit").val().split(";");
+
+        var exist=0;var n;
+        for(i=0;i<strs.length-1;i++)
+        {
+            if(strs[i].split("-")[0]==news && strs[i].split("-")[1]==user)
+            {
+                exist=1; n=i;
+            }
+        }
+        if(exist==1)
+        {
+            var newVal=strs[n]; 
+            visit=newVal.split("-"); visit[3]=additional; 
+            newVal=visit.join("-"); strs[n]=newVal; $("#toVisit").val(strs.join(";"));
+        }
+        else{ $("#toVisit").val($("#toVisit").val()+news+"-"+user+"-"+"0"+"-"+additional+";");}
+    }
+    if($("#"+element).val()==val){$("#"+element).val(""); return 0;}
+    if($("#"+element).val()==""){$("#"+element).val(val); return 1;}
+}
+function hide(name)
 {
     var elem=document.getElementsByClassName("name");
     for(i=0;i<elem.length;i++)
     {
         elem[i].style.top="-100";
         elem[i].style.visibility="hidden";
-    }
-}
-
-var switchers=new Array();
-function switchersAnims(Enable)
-{
-    if(Enable==0)
-    {
-        for(i=0;i<switchers.length;i++)
-        {
-            var n=switchers[i][0];
-            var e=document.getElementById(n);
-            e.onclick=function(){};
-        }
-    }
-    else
-    {
-        for(i=0;i<switchers.length;i++)
-        {
-            var n=switchers[i][0];
-            console.log("n:"+n);
-            var e=document.getElementById(n);
-            e.onclick=function(){switcher(n);};
-        }
-    }
-}
-function switcher(elemID)
-{
-    document.getElementsByClassName("switcher");
-    
-
-    elementName="#"+$("#"+elemID).attr('id');
-    elem=document.getElementById(elemID);
-    console.log(elemID);
-
-    var exist=0; var num;
-    for(i=0;i<switchers.length;i++)
-    {
-        if(switchers[i][0]==elemID) { exist=1; num=i; break; }
-    }
-    if(exist!=1) { switchers.push(new Array(elemID,0)); console.log("created for"+elemID); num=switchers.length-1; }
-    
-    if(switchers[num][1]==0)
-    {
-        switchersAnims(0);
-        $(elementName).animate({float:"=left", width:"+=50%"},500,
-        function()
-        {
-            switchersAnims(0);
-            $(elementName).animate({marginLeft:"+=50%", width:"-=50%"},300); 
-            switchersAnims(1);
-        }); 
-        switchers[num][1]=1;
-        
-        if(elemID=="isEvent")
-        {
-        $("#Date").animate({opacity:"+=1"},500);
-        $("#Time").animate({opacity:"+=1"},500);
-        $("#Price").animate({opacity:"+=1"},500);
-        var d=new Date();
-        var date=d.getFullYear()+"-"+(d.getUTCMonth()+1<10?('0'+d.getUTCMonth()+1):d.getUTCMonth()+1)+"-"+(d.getDate()<10?'0'+d.getDate():d.getDate());
-        
-        var time=(d.getHours()<10?"0"+d.getHours():d.getHours())+":"+(d.getMinutes()<10?"0"+d.getMinutes():d.getMinutes());
-        $("#Date").val(date);
-        $("#Time").val(time);
-        document.getElementById("Type").value="1";
-        }
-    }
-    else
-    {
-        switchersAnims(0);
-        $(elementName).animate({marginLeft:"-=50%", width:"+=50%"},500,
-        function()
-        {
-            switchersAnims(0);
-            $(elementName).animate({width:"-=50%"},300);
-            switchersAnims(1);
-        }); 
-        switchers[num][1]=0;
-
-        if(elemID=="isEvent")
-        {
-        document.getElementById("Type").value="0";
-        $("#Date").animate({opacity:"-=1"},500);
-        $("#Time").animate({opacity:"-=1"},500);
-        $("#Price").animate({opacity:"-=1"},500);
-        }
     }
 }
 

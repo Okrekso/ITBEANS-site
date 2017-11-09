@@ -18,7 +18,8 @@ CREATE TABLE News
     Small_content text,
     Type varchar(100),
     CreateDate date,
-    StartDate dateTime
+    StartDate dateTime,
+    Price INT
 );
 
 CREATE TABLE Visitors
@@ -60,10 +61,25 @@ END IF;
 END;
 
 CREATE TRIGGER `new_visitor` BEFORE INSERT ON `Visitors` FOR EACH ROW BEGIN
-IF NEW.`Additional` IS NULL
+SET @curVisit=(SELECT `Visited` FROM Visitors WHERE ID=NEW.`ID`);
+SET @CurLevel= (SELECT `Level` FROM Users WHERE ID=NEW.`UserID`);
+SET @Price=(SELECT Price FROM News WHERE ID=NEW.`NewsID`);
+
+IF NEW.`Visited`=1 AND @curVisit!=NEW.`Visited`
 THEN
-SET NEW.`Additional`=0;
+UPDATE Users SET Level=@CurLevel+@Price WHERE ID=NEW.`UserID`;
+
+ELSEIF NEW.`Visited`=0 AND @curVisit!=NEW.`Visited`
+THEN
+UPDATE Users SET Level=@CurLevel-@Price WHERE ID=NEW.`UserID`;
 END IF;
 
-SET NEW.`Visited`=0;
-END;
+SET @old=(SELECT `Additional` FROM `Visitors` WHERE ID=NEW.`ID`);
+
+IF NEW.`Additional`!=@old
+THEN
+UPDATE Users SET Level=@curLevel+(NEW.`Additional`-@old)
+WHERE ID=NEW.`UserID`;
+END IF;
+
+END

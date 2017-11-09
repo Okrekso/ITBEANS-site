@@ -98,6 +98,10 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 <input name="newsID" id="newsID" type="text" style="display:none"></input>
 </form>
 
+<form id="editForm" type="get" action="newPost.php">
+<input name="editID" id="editID" type="text" style="display:none"></input>
+</form>
+
 <script type="text/javascript">
 	function goNews(id)
 	{
@@ -116,10 +120,15 @@ echo "</form>";
 ?>
 
 <script>
-	function deletePost(Id)
+function deletePost(Id)
 {
     $("#toDelete").val(Id);
     $("#deleter").submit();
+}
+function editPost(Id)
+{
+	$("#editID").val(Id);
+	$("#editForm").submit();
 }
 </script>
 
@@ -153,6 +162,10 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 
 	if(getUserStatus()=="Gold")
 	{
+		echo "<div onclick=\"editPost($id);\" style=\"position:absolute; right:40; top:0; margin:2 2; background:#0f2848; width:30; height:30; \">";
+			echo "<img src=\"/images/pen.png\" style=\"width:100%; height:100%;\"></img>";
+		echo "</div>";
+
 		echo "<div onclick=\"deletePost($id);\" id=\"deleteBtn\">";
 		echo "<div style=\"background:white; transform: rotate(45deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
 		echo "<div style=\"background:white; transform: rotate(135deg); margin:13 0%; position:absolute; width:100%; height:3;\"></div>";
@@ -200,7 +213,7 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 		$hour=date("H",$wrDate); $mins=date("i",$wrDate); $month=date("m",$wrDate); $day=date("d",$wrDate);
 		echo "<a class=\"text_S\" style=\"position:absolute; color:red; right:0; text-align:right; background:black; bottom:35; opacity:0.7;\">початок: $month/$day о $hour:$mins</a>";
 	}
-	echo "<a class=\"text_S\" style=\"position:absolute; right:0; bottom:15; opacity:0.5;\">$DateOfCreate</a>";
+	else { echo "<a class=\"text_S\" style=\"position:absolute; right:0; bottom:15; opacity:0.5;\">$DateOfCreate</a>"; }
 	echo "<a class=\"text_S\" style=\"position:absolute; right:0; text-align:right; bottom:0; opacity:0.5;\">$Auth</a>";
 
 echo "</div>";
