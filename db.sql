@@ -31,7 +31,8 @@ CREATE TABLE Visitors
     Additional INT
 );
 
-CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW BEGIN
+CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW
+BEGIN
 SET NEW.`CreateDate`= NOW();
 
 IF NEW.`Price`<1
@@ -40,7 +41,8 @@ SET NEW.`Price`=1;
 END IF;
 END;
 
-CREATE TRIGGER `Updater` BEFORE UPDATE ON `Users` FRO EACH ROW BEGIN
+CREATE TRIGGER `status changer` BEFORE UPDATE ON `Users` FRO EACH ROW
+BEGIN
 IF NEW.Level<30
 THEN
 SET NEW.`Status`='Green';
@@ -58,9 +60,22 @@ IF NEW.Level>90
 THEN
 SET NEW.`Status`='Gold';
 END IF;
+
+END
+
+CREATE TRIGGER `new_visitor` BEFORE INSERT ON `Visitors` FOR EACH ROW 
+BEGIN
+IF NEW.`Additional` IS NULL
+THEN
+SET NEW.`Additional`=0;
+END IF;
+
+SET NEW.`Visited`=0;
+
 END;
 
-CREATE TRIGGER `new_visitor` BEFORE INSERT ON `Visitors` FOR EACH ROW BEGIN
+CREATE TRIGGER Visited BEFORE UPDATE ON `Visitors` FOR EACH ROW
+BEGIN
 SET @curVisit=(SELECT `Visited` FROM Visitors WHERE ID=NEW.`ID`);
 SET @CurLevel= (SELECT `Level` FROM Users WHERE ID=NEW.`UserID`);
 SET @Price=(SELECT Price FROM News WHERE ID=NEW.`NewsID`);
@@ -82,4 +97,4 @@ UPDATE Users SET Level=@curLevel+(NEW.`Additional`-@old)
 WHERE ID=NEW.`UserID`;
 END IF;
 
-END
+END;
