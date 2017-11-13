@@ -1,4 +1,4 @@
 <IfModule dir_module>
-    DirectoryIndex "pages/index.php"
+    DirectoryIndex "pages/index.html"
 </IfModule>
 ErrorDocument 404 /404.html

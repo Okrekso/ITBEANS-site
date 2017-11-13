@@ -1,0 +1,164 @@
+<html>
+<head>
+<link rel="shortcut icon" href="/bean.ico" type="x-icon"/>
+<script src="/pages/javascript/initials.js" type="text/javascript"></script>
+<link href="/pages/styles/style.css" rel="stylesheet" type="text/css"/>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/pages/javascript/jquery.cookie.js"></script>
+
+
+<title>IT B.E.A.N.S.</title>
+<meta charset="utf-8">
+</head>
+
+
+<body>
+
+<div style="width:80%; min-width:1000; height:100%; margin:0 auto; left:0; right:0; " >
+<div style="position:absolute; background:white; width:100%; margin:0 0; left:0; right:0; height:50; top:200;">
+
+<div style="position:absolute; background:black; opacity:0.1; left:0; right:0; width:100%; height:100%;"></div>
+<b id="Top" style="color:black; position:absolute; margin:auto auto; width:100%; text-align:center; top:10; opacity:1; font-size:25; font-family:HeaderText; ">
+IT B.E.A.N.S. перша спільнота IT STEP University
+</b>
+
+</div>
+
+
+
+<div id="imgs" style="position:relative; top:250; margin:auto auto; max-width:1500; width:100%; height:500;overflow-x: hidden; overflow-y: hidden;">
+
+<img style="margin:0 -150; width:auto; height:auto" class="mainImg" src="/images/main_photo_3.jpg">
+</img>
+
+<img style="right:calc(0px - 150px); width:auto; height:auto;" class="mainImg" src="/images/main_photo_2.jpg">
+</img>
+
+<img style="left:calc(50% - 350px); width:auto; height:auto"  class="mainImg" src="/images/main_photo_1.jpg">
+</img>
+
+<div style="background:#3865c1; width:100%; height:100%; position:absolute; opacity:0.4;"></div>
+
+<script>
+	function resized()
+	{
+		var wdth=$("#imgs").css("width"); var hght=$("#imgs").css("height");
+		wdth=parseInt(wdth, 10); hght=parseInt(hght, 10);
+		var newW=wdth/3; var newH=hght/1;
+
+		$(".mainImg").css({height:newH});
+	}
+	resized();
+	$(window).resize(function(){resized();});
+</script>
+
+<div class="scrollable" style="visibility:hidden; position:absolute;background:black; opacity:0.4; left:-280; margin:0 50%; top:50; height:50; width:560;">
+</div>
+<a class="zagolovok featur_text scrollable" style="left:-280; width:560; top:60; margin:0 50%;">Розвиток hard и soft скілів серед учасників</a>
+
+
+<div class="scrollable" style="visibility:hidden; position:absolute;background:black; opacity:0.4; left:-200; margin:0 50%; top:140; height:50; width:400;">
+</div>
+<a class="zagolovok featur_text scrollable" style="left:-200; width:400; top:150; margin:0 50%;">Платформа для шерінгу знань</a>
+
+
+<div class="scrollable" style="visibility:hidden; position:absolute;background:black; opacity:0.4; left:-160; margin:0 50%; top:230; height:50; width:320;">
+</div>
+<a class="zagolovok featur_text scrollable" style="left:-160; width:320; top:240; margin:0 50%;">expirience система</a>
+
+</div>
+
+
+<div id="text_about" style="position:relative; background:#f7f7f7; box-shadow: 0 0 10px rgb(194, 194, 194); top:270; font-family:HeaderText; font-size:16pt; text-align:center;">
+		<a style="position:relative; top:10; color:rgb(0, 0, 0);">
+			Клуб почав існування 11-го вересня 2017 року. Саме тоді було закладено таке поняття IT боби. Двоє засновників вирішили створити місце, де кожет зможе відчути себе викладаче, та допомгти людям, якім складніше дається программа.<br><br>
+			
+			Головною подією клубу є "Кодова година", яка проводиться кожної середи. На ній діючий президент клубу - Оскерко Семен проводить екскурс по мовам програмування, та роз'ясняє різні кейси завдань, пов'язаних із ООП.<br><br>
+			
+			також клуб починає діяльність у сфері soft skills. Скоро в программі з'являться нові курси з розвитку себе у цьому напрямку.<br><br>
+		</a>
+</div>
+
+<div id="bobs" style="position:relative; top:300; background:#f7f7f7; box-shadow: 0 0 10px rgb(194, 194, 194); height:570;">
+	<div style="position:relative; top:10; font-family:HeaderText; font-size:16pt; text-align:center;">
+		<a>
+		В клубі діє трьохфазова система набору expirience-у
+		</a>
+	</div>
+	
+	<div class="scrollable" style="visibility:hidden; width:95%; position:relative; top:20; height:160; background:#cecece; margin:10 30;">
+			<div class="bob_bg" style="background:#47ad4c; border-color:rgb(32, 121, 47);">
+			<img src="/images/beans/green.png" class="bob_img"></img>
+			</div>
+			<div style="display:inline-block; position:absolute; margin:10 10; width:150; height:30; background:#e4e4e4">
+				<a class="zagolovok" style="color:green; font-size:15pt;">Club member</a>
+			</div>
+			<div style="display:inline-block; position:absolute; margin:50 10; width:500; height:100; background:#e4e4e4">
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• може відвідувати зустрічі</a> <br>
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• може брати участь у голосуванні</a> <br>
+					<a class="zagolovok" style="color:rgb(180, 6, 6); font-size:15pt;">• не може проводити або пропонувати зайняття</a> <br>
+					<a class="zagolovok" style="color:rgb(180, 6, 6); font-size:15pt;">• не має додаткових привілей</a> <br>
+			</div>
+	</div>
+
+	<div class="scrollable" style="visibility:hidden; width:95%; position:relative; top:20; height:160; background:#cecece; margin:10 30;">
+			<div class="bob_bg" style="background:#cc9509; border-color:rgb(175, 111, 7);">
+			<img src="/images/beans/orange.png" class="bob_img"></img>
+			</div>
+			<div style="display:inline-block; position:absolute; margin:10 10; width:155; height:30; background:#e4e4e4">
+				<a class="zagolovok" style="color:rgb(255, 145, 0); font-size:15pt;">Club member+</a>
+			</div>
+			<div style="display:inline-block; position:absolute; margin:50 10; width:500; height:100; background:#e4e4e4">
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">•  може відвідувати зустрічі</a> <br>
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• може брати участь у голосуванні</a> <br>
+					<a class="zagolovok" style="color:rgb(226, 155, 0); font-size:15pt;">• може пропонувати, але не проводити зайняття</a> <br>
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• має додаткових привілей</a> <br>
+			</div>
+	</div>
+
+	<div class="scrollable" style="visibility:hidden; width:95%; position:relative; top:20; height:160; background:#cecece; margin:10 30;">
+			<div class="bob_bg" style="background:#e6d200; border-color:rgb(174, 177, 7);">
+			<img src="/images/beans/yellow.png" class="bob_img"></img>
+			</div>
+			<div style="display:inline-block; position:absolute; margin:10 10; width:240; height:30; background:#e4e4e4">
+				<a class="zagolovok" style="color:rgb(185, 148, 0); font-size:15pt;">Advanced club member</a>
+			</div>
+			<div style="display:inline-block; position:absolute; margin:50 10; width:500; height:100; background:#e4e4e4">
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• може відвідувати зустрічі</a> <br>
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• може брати участь у голосуванні</a> <br>
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• може пропонувати і проводити зайняття</a> <br>
+					<a class="zagolovok" style="color:rgb(30, 156, 37); font-size:15pt;">• має додаткових привілей</a> <br>
+			</div>
+	</div>
+
+	<div style="position:absolute; top:600; width:100%; height:50;">
+		<a style="position:absolute; opacity:0.4; text-align:center; font-size:15pt; width:100%; height:100%; font-family:HeaderText;">IT BEANS 2017 (c)</a>
+	</div>
+</div>
+
+</div>
+
+<script src="/pages/javascript/anims.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+ setDir(0,"right",200,400); setDir(1,"right",200,400); 
+ setDir(2,"left",200,400); setDir(3,"left",200,400); 
+ setDir(4,"right",200,400); setDir(5,"right",200,400); 
+
+ setDir(6,"right",500,500); setDir(7,"right",400,500); setDir(8,"right",300,500); 
+ setCollision(6,"bobs"); setCollision(7,"bobs"); setCollision(8,"bobs");
+ </script>
+
+<script type="text/javascript">
+	scrolling();
+	$(window).scroll(function(){scrolling();});
+</script>
+
+<div id="head"></div>
+<script type="text/javascript"> 
+setHeader();
+</script> 
+	
+
+</body>
+</html>

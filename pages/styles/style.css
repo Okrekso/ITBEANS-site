@@ -1,6 +1,6 @@
 body
 {
-	background-color:#2E2E2E;
+	background-color:white;
 }
 
 @font-face
@@ -9,59 +9,83 @@ font-family:HeaderText;
 src: url('/pages/fonts/headfont.otf');	
 }
 
-#button_home
+.btn
 {
 	position:absolute;
+	
 	margin:10 10;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:10%;
-	min-width:150;
-	box-shadow: 0 0 10px;
-	max-width:200;
-}
-#button_news
-{
-	position:absolute;
-	margin:10 200;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:10%;
-	min-width:150;
-	box-shadow: 0 0 10px;
-	max-width:200;
-}
-#button_members
-{
-	position:absolute;
-	margin:10 400;
-	background:#4D65FD;
-	height:40;
-	top:60;
-	width:10%;
-	min-width:150px;
-	box-shadow: 0 0 10px;
-	max-width:200;
-}
-
-#button_myCab
-{
-	position:absolute;
-	margin:10 600;
-	background:#4D65FD;
+	background:#245eac;
 	height:40;
 	top:60;
 	width:15%;
-	min-width:250px;
-	box-shadow: 0 0 10px;
-	max-width:300;
+	min-width:180;
+	box-shadow: 0 0 10px #5d5d5d;
+	max-width:200;
 }
+.btn_clear
+{
+	position:absolute;
+	
+	background:#245eac;
+	box-shadow: 0 0 10px #5d5d5d;
+	max-width:200;
+}
+.mainImg
+{
+	position:absolute;
+	width:40%; height:100%;
+	clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
+}
+.featur_bg
+{
+	position:relative;
+	background:black;
+	opacity:0.4;
+	clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
+}
+.featur_text
+{
+	position:absolute; 
+	margin:10 5;
+	font-size:25;
+	font-family:HeaderText;
+	visibility:hidden;
+	white-space: nowrap; 
+	text-align:center;
+	
+	color:white;
+}
+.bob_img
+{
+	 position:absolute; margin:50% 50%; left:-35; top:-50; width:70; transform:rotate(145deg); height:100;
+}
+.bob_bg
+{
+	display:inline-block; position:relative; border:5px solid black; margin:10 10; width:120; height:120;
+}
+
+#button_home::after
+{
+	content:"головна";
+}
+#button_news::after
+{
+	content:"новини";
+}
+#button_members::after
+{
+	content:"учасники";
+}
+
+#button_myCab::after
+{
+	content:"мій кабінет";
+}
+
 #shapka_fon
 {
 	position:absolute;
-	background:#6B7DF5;
+	background:#2d73d2;
 	left:0;
 	right:0;
 	top:20;
@@ -95,6 +119,7 @@ src: url('/pages/fonts/headfont.otf');
 	-webkit-user-select:none;
 	margin:0 0;
 	font-size:30;
+	min-width: 100;
 	font-family:HeaderText;
 	Color:white;
 }
@@ -113,9 +138,13 @@ src: url('/pages/fonts/headfont.otf');
 	margin:10 5;
 	font-size:25;
 	font-family:HeaderText;
-	Color:white;
+	Color:rgb(255, 255, 255);
 }
-
+#arrow
+{
+	top:150;
+	left:calc(72% - 550px);
+}
 .text_S
 {
 	margin:0 5;
@@ -123,22 +152,77 @@ src: url('/pages/fonts/headfont.otf');
 	font-family:HeaderText;
 	Color:Black;
 }
-
-@keyframes anim 
+#deleteBtn
 {
-    from { background-color:#4D65FD; }
-    to { background-color: #283272; }
+	width:30; height:30; position:absolute; right:0; top:0; background:#0f2848; margin:2 2;
 }
-#search:focus
+.memberBlock
 {
-	value:0;
+	width:90%;
+	min-width: 800;
+	height:100;
+	position:relative;
+	background: #f0f0f0;
+	margin:auto auto;
+	box-shadow: 0 0 10px #a1a1a1;
+}
+.logout_text
+{
+	display:none;
+	visibility:visible; 
+	font-family:HeaderText; 
+	text-align:center; 
+	color: white; 
+	opacity:1;  
+	width:100%; 
+	height:20;
+	position:absolute;
+	margin:auto auto;
+}
+.menu_element
+{
+	position:absolute; margin:40 0;
+	visibility:hidden; width:100%;
+	height:20; background:#4172b1;
+	opacity:1;
+	box-shadow:0 0 10px #727272;
+}
+@keyframes color_anim 
+{
+    from { background-color:#245eac; }
+    to { background-color: #183d6e; }
+}
+@keyframes color_anim_2 
+{
+    from { background-color:#0f2848; }
+    to { background-color: #911111; }
+}
+@keyframes poyava_anim
+{
+    from { opacity:0 }
+    to { opacity:1 }
 }
 
-.btn:hover, .btnS:hover
+#deleteBtn:hover
 {
 	cursor:pointer;
-	background-color:red;
 	animation-fill-mode: forwards;
-	animation-name:anim;
+	animation-name:color_anim_2;
 	animation-duration:2s;
+}
+
+.btn:hover, .btnS:hover, .btn_clear:hover
+{
+	cursor:pointer;
+	background-color:#245eac;
+	animation-fill-mode: forwards;
+	animation-name:color_anim;
+	animation-duration:2s;
+}
+
+.rideImg
+{
+	width:100%; left:0;
+	position: absolute; 
+	height:450;
 }
