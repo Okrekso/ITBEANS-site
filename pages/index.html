@@ -26,19 +26,31 @@ IT B.E.A.N.S. перша спільнота IT STEP University
 
 
 
-<div style="position:relative; top:250; width:100%; height:500;overflow-x: hidden; overflow-y: hidden; left:0; right:0;">
+<div id="imgs" style="position:relative; top:250; margin:auto auto; max-width:1500; width:100%; height:500;overflow-x: hidden; overflow-y: hidden;">
 
-<img style="margin:0 -150; width:800" class="mainImg" src="/images/main_photo_3.jpg">
+<img style="margin:0 -150; width:auto; height:auto" class="mainImg" src="/images/main_photo_3.jpg">
 </img>
 
-<img style="left:20%; margin:0 auto; width:800" class="mainImg" src="/images/main_photo_1.jpg">
+<img style="right:calc(0px - 150px); width:auto; height:auto;" class="mainImg" src="/images/main_photo_2.jpg">
 </img>
 
-<img style="left:65%; width:800" class="mainImg" src="/images/main_photo_2.jpg">
+<img style="left:calc(50% - 350px); width:auto; height:auto"  class="mainImg" src="/images/main_photo_1.jpg">
 </img>
 
 <div style="background:#3865c1; width:100%; height:100%; position:absolute; opacity:0.4;"></div>
 
+<script>
+	function resized()
+	{
+		var wdth=$("#imgs").css("width"); var hght=$("#imgs").css("height");
+		wdth=parseInt(wdth, 10); hght=parseInt(hght, 10);
+		var newW=wdth/3; var newH=hght/1;
+
+		$(".mainImg").css({height:newH});
+	}
+	resized();
+	$(window).resize(function(){resized();});
+</script>
 
 <div class="scrollable" style="visibility:hidden; position:absolute;background:black; opacity:0.4; left:-280; margin:0 50%; top:50; height:50; width:560;">
 </div>
@@ -70,7 +82,7 @@ IT B.E.A.N.S. перша спільнота IT STEP University
 <div id="bobs" style="position:relative; top:300; background:#f7f7f7; box-shadow: 0 0 10px rgb(194, 194, 194); height:570;">
 	<div style="position:relative; top:10; font-family:HeaderText; font-size:16pt; text-align:center;">
 		<a>
-		В кулбі діє трьохфазова система набору expirience-у
+		В клубі діє трьохфазова система набору expirience-у
 		</a>
 	</div>
 	

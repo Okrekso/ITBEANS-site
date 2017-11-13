@@ -1,4 +1,4 @@
-<?php include '/php/registration.php' ?>
+
 <?php 
 $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
 $result=$sqlCon->query("SELECT ID, Name, Login, Level, Status FROM Users");
@@ -45,16 +45,18 @@ function createUser($User, $Num)
         else
         {
         echo "<div class=\"bob_bg\" style=\"display: inline-block; float: left; position:relative; ";
-        if($Xp<30 && $Xp>=0){ echo "background:#47ad4c; border-color:rgb(32, 121, 47); width:75; height:75; margin:6 6;\">"; }
-        if($Xp>=30 && $Xp<90){ echo "background:#cc9509; border-color:rgb(175, 111, 7); width:75; height:75; margin:6 6;\">"; }
-        if($Xp>=90 || $Status=="Admin"){ echo "background:#e6d200; border-color:rgb(174, 177, 7); width:75; height:75; margin:6 6;\">"; }
+        if(getUserStatusById($ID)=="Green"){ echo "background:#47ad4c; border-color:rgb(32, 121, 47); width:75; height:75; margin:6 6;\">"; }
+        if(getUserStatusById($ID)=="Orange"){ echo "background:#cc9509; border-color:rgb(175, 111, 7); width:75; height:75; margin:6 6;\">"; }
+        if(getUserStatusById($ID)=="Gold"){ echo "background:#e6d200; border-color:rgb(174, 177, 7); width:75; height:75; margin:6 6;\">"; }
+        if(getUserStatusById($ID)=="Deleted"){ echo "background:#b30000; border-color:rgb(118, 0, 0); width:75; height:75; margin:6 6;\">"; }
         }
             if($Xp=="") { echo "<img src=\"/images/beans/gray.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
             else
             {
-            if($Xp<30 && $Xp>=0){ echo "<img src=\"/images/beans/green.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
-            if($Xp>=30 && $Xp<90){ echo "<img src=\"/images/beans/orange.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
-            if($Xp>=90 || $Status=="Admin"){ echo "<img src=\"/images/beans/yellow.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
+            if(getUserStatusById($ID)=="Green"){ echo "<img src=\"/images/beans/green.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
+            if(getUserStatusById($ID)=="Orange"){ echo "<img src=\"/images/beans/orange.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
+            if(getUserStatusById($ID)=="Gold"){ echo "<img src=\"/images/beans/yellow.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
+            if(getUserStatusById($ID)=="Deleted"){ echo "<img src=\"/images/beans/red.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
             }
 
         echo "</div>";
@@ -62,27 +64,37 @@ function createUser($User, $Num)
         echo "<b class=\"text_S\" style=\"display:block; position:relative; margin:0 0; top:5;\" >$Name</b>";
         echo "<b class=\"text_S\" style=\"display:block; position:relative; margin:0 0; top:5;\" >#$Num</b>";
         
-        if($Xp==""){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:gray;\" >$Status</b>"; }
+        if(getUserStatusById($ID)==""){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:gray;\" >$Status</b>"; }
         else
         {
-        if($Xp<30 && $Xp>=0){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:green;\" >$Status</b>"; }
-        if($Xp>=30 && $Xp<90){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:orange;\" >$Status</b>"; }
-        if($Xp>=90 || $Status=="Admin"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:#e6d200;\" >$Status</b>"; }
+        if(getUserStatusById($ID)=="Green"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:green;\" >$Status</b>"; }
+        if(getUserStatusById($ID)=="Orange"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:orange;\" >$Status</b>"; }
+        if(getUserStatusById($ID)=="Gold"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:#e6d200;\" >$Status</b>"; }
+        if(getUserStatusById($ID)=="Deleted"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:red;\" >$Status</b>"; }        
         }
-
-        if($Xp=="")
+        //echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:black;\">$Xp</b>";
+            
+        if(getUserStatusById($ID)==""  || getUserStatusById($ID)=="Orange" && getSqlValueById($ID,"Level","Users")>90 || getUserStatusById($ID)=="Deleted")
         { 
+        if(getUserStatus()=="Gold")
+        {
+        $toGold=0;
+        if(getUserStatusById($ID)=="Orange" && getSqlValueById($ID,"Level","Users")>90){$toGold=1;}
         echo "<div class=\"btn_clear\" style=\"width:150; height:25; left:95; bottom:10;\">";
-        echo "<a class=\"text_S\" onclick=\"acceptUser($ID);\" style=\"color:white; top:10%; width:90%; text-align:center; position:absolute;\">підтвердити</a>";
+        echo "<a class=\"text_S\" onclick=\"";
+            if($toGold==0) { echo "acceptUser($ID);"; }
+            else { echo "toGoldUser($ID);"; }
+        echo "\" style=\"color:white; top:10%; width:90%; text-align:center; position:absolute;\">підтвердити</a>";
         echo "</div>";
+        }
         }
         else
         {
         echo "<div style=\"display:inline-block; margin:25 0; left:95; position:absolute; width:80%; height:5; background:white;\">";
                 
-                if($Xp<30 && $Xp>=0) { echo "<div style=\"width:$Xp%; height:100%; background:green;\"></div>"; }
-                if($Xp>=30 && $Xp<90) { echo "<div style=\"width:$Xp%; height:100%; background:orange;\"></div>"; }
-                if($Xp>=90 || $Status=="Admin") { echo "<div style=\"width:$Xp%; height:100%; background:#e6d200;\"></div>"; }
+                if(getUserStatusById($ID)=="Green") { echo "<div style=\"width:$Xp%; height:100%; background:green;\"></div>"; }
+                if(getUserStatusById($ID)=="Orange") { echo "<div style=\"width:$Xp%; height:100%; background:orange;\"></div>"; }
+                if(getUserStatusById($ID)=="Gold") { echo "<div style=\"width:$Xp%; height:100%; background:#e6d200;\"></div>"; }
 
             echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 0%; top:5;\"></a>";
             echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 10%; top:5;\">0</a>";

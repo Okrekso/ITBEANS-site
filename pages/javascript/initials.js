@@ -161,6 +161,12 @@ function acceptUser(num)
     $("#acception").submit();
 }
 
+function toGoldUser(num)
+{
+    $("#toGold").val(num);
+    $("#toGoldForm").submit();
+}
+
 function registrateOnEvent(num)
 {
     $("#toRegistr").val(num);
@@ -170,6 +176,12 @@ function deRegistrateOnEvent(num)
 {
     $("#toDeregistr").val(num);
     $("#registr").submit();
+}
+
+function gotoNewsNext(i)
+{
+    $("#page").val(i);
+    $("#pageForm").submit();
 }
 
 function gotoMyEvents() { location.href="/pages/myEvents.php"; }

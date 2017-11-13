@@ -10,10 +10,16 @@ class sMain
 	public $type;
 	public $startDate;
 	public $point;
-	public function __construct($ID, $head, $content, $smallContent, $type, $StartDate)
+	public $creator;
+	public function __construct($ID, $head, $content, $smallContent, $type, $StartDate,$CreatorID)
 	{
 		$this->head=$head; $this->content=$content; $this->ID=$ID; $this->smallContent=$smallContent;
 		$this->point=0; $this->type=$type; $this->startDate=$StartDate;
+
+		$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+		$result=$sqlCon->query("SELECT `Name` FROM `Users` WHERE `ID`='$CreatorID'");
+		if($result!=null) { $r=$result->fetch_assoc(); $this->creator=$r['Name']; }
+		else {$this->creator="error";}
 	}
 
 	function howFar()
@@ -32,18 +38,22 @@ class sMain
 
 	function chek_search($str)
 	{
-		$str=mb_strtolower($str,'UTF-8');
-		$head=mb_strtolower($this->head,'UTF-8');
+		$str=mb_strtolower($str,'UTF-8'); $str=str_replace(' ','',$str); $strLen=iconv_strlen($str,'UTF-8');
+		$head=mb_strtolower($this->head,'UTF-8'); $head=str_replace(' ','',$head); $headLen=iconv_strlen($head,'UTF-8');
+		$creat=mb_strtolower($this->creator,'UTF-8'); $creat=str_replace(' ','',$creat); $creatLen=iconv_strlen($creat,'UTF-8');
+		$date=($this->startDate);
+		$month=split('-',$date)[1]; $day=split(' ',split('-',$date)[2])[0]; $monthLen=iconv_strlen($$month,'UTF-8'); $dayLen=iconv_strlen($day,'UTF-8');
+		consoleLog("$month | $day");
 		$end=false;
 		$start=0;
+		
+		$ball=100/$strLen;
 
-		$ball=100/iconv_strlen($str,'UTF-8');
-
-		for($i=0;$i<iconv_strlen($str,'UTF-8');$i++)
+		for($i=0;$i<$strLen;$i++)
 		{
 			$str_char=iconv_substr($str,$i,1,'UTF-8');
 			
-			for($d=$start;$d<iconv_strlen($head,'UTF-8');$d++)
+			for($d=$start;$d<$headLen;$d++)
 			{
 				$stat_char=iconv_substr($head,$d,1,'UTF-8');
 				
@@ -62,7 +72,38 @@ class sMain
 					}
 				}
 			}
+			if($end)
+			{
+				break;
+			}
+		}
 
+		$end=false;
+		$start=0;
+		for($i=0;$i<$strLen;$i++)
+		{
+			$str_char=iconv_substr($str,$i,1,'UTF-8');
+			
+			for($d=$start;$d<$creatLen;$d++)
+			{
+				$stat_char=iconv_substr($creat,$d,1,'UTF-8');
+				
+				if($str_char==$stat_char)
+				{
+					$this->point+=$ball;
+					consoleLog("++");
+					$start=$d+1;
+					break;
+				}
+				else
+				{
+					if($this->point>=$ball)
+					{
+						$end=true;
+						break;
+					}
+				}
+			}
 			if($end)
 			{
 				break;
@@ -101,6 +142,7 @@ function sorter($str)
 				array_push($statti,$stat[$i]);
 			}
 		}
+		sorterEvents();
 	}
 	else
 	{
@@ -137,24 +179,26 @@ function sorterEvents()
 		}
 	}
 	}
-	
-	$example=$events[0]->howFar();
+
 	$a=0;
 	while($a<count($events) && $events[$a]->howFar()<0)
 	{
 	$a++;
 	}
-
-	$statti=array_reverse($stat);
+	
+	$statti=$stat;
+	
+		if($a!=count($events))
+		{
 	for($i=(count($statti)-1);$i>=0;$i--)
 	{
 		$statti[$i+1]=$statti[$i];
 	}
 
 	$statti[0]=$events[$a];
-
-	
-	$action=$stat[0];
+	return 1;
+		}
+	return 0;
 	}
 	//$statti=array();
 	
@@ -164,17 +208,23 @@ function fillNews()
 {
 global $statti,$stat;
 $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
-$News=$sqlCon->query("SELECT * FROM News");
+$page=$_GET["page"]==null?0:$_GET["page"]; $maxP=$page*10;
+
+$Closest=$sqlCon->query("SELECT * FROM News WHERE `StartDate`!='0000-00-00 00:00:00' AND `StartDate`>=NOW() ORDER BY StartDate ASC LIMIT 1");
+$res=$Closest->fetch_assoc(); 
+
+$News=$sqlCon->query("SELECT * FROM News ORDER BY ID DESC LIMIT 10 OFFSET $maxP");
 
 $stat=array();
 while($rows=$News->fetch_assoc())
 {
-	array_push($stat, new sMain($rows["ID"],$rows["Head"],$rows["Content"],$rows["Small_content"],$rows["Type"],$rows["StartDate"]));
+	array_push($stat, new sMain($rows["ID"],$rows["Head"],$rows["Content"],$rows["Small_content"],$rows["Type"],$rows["StartDate"],$rows["Creator_ID"]));
 }
 $statti=array_reverse($stat);
 $sqlCon->close();
 
-sorterEvents();
+if($_GET['search']==null) { $closest=sorterEvents(); }
+
 sorter($_GET['search']);
 }
 

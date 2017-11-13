@@ -52,9 +52,11 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 	<input id="toDeregistr" style="display:none" name="toDeregistr"></input>
 </form>
 
+
 <!-- registrating user on event -->
 <?php  include "/php/registration.php"?>
 <?php
+	
 	if($_POST["toRegistr"]!=null)
 	{
 		$newsID=$_POST["toRegistr"];
@@ -96,12 +98,20 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 
 <form id="newsForm" type="get" action="showNews.php">
 <input name="newsID" id="newsID" type="text" style="display:none"></input>
+</form> 
+
+<form id="pageForm" type="get">
+	<input name="page" value="<?php echo $_GET["page"]==null?0:$_Get["page"];?>" id="page" style="display:none"></input>
 </form>
 
-<form id="editForm" type="get" action="newPost.php">
-<input name="editID" id="editID" type="text" style="display:none"></input>
-</form>
-
+<?php
+if(getUserStatus()=="Gold")
+{
+echo "<form id=\"editForm\" type=\"get\" action=\"newPost.php\">";
+echo "<input name=\"editID\" id=\"editID\" type=\"text\" style=\"display:none\"></input>";
+echo "</form>";
+}
+?>
 <script type="text/javascript">
 	function goNews(id)
 	{
@@ -139,8 +149,9 @@ if($deleter!=null && getUserStatus()=="Gold")
 {
 	deleteNews($deleter);
 }
-fillNews();
 
+fillNews();
+$closest=sorterEvents(); 
 
 for($i=0;$i<count($statti);$i++)
 {
@@ -149,14 +160,16 @@ $cont=$statti[$i]->smallContent;
 $id=$statti[$i]->ID;
 $type=$statti[$i]->type;
 
+$userID=getUserValue($_COOKIE["userID"],'ID');
+
 $bg=$statti[$i]->type=="Event"?"#3232aa":"#245eac";
-if($i==0 && $type=="Event") { $bg="#8209a3"; }
+if($i==0 && $type=="Event" && $closest!=0) { $bg="#8209a3"; }
 
 echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=\"main_$i\">";
 
 	//голова
 	echo "<div  style=\"cursor:pointer; background:$bg; width:100%; height:35; box-shadow: 0 0 10px; \"> <p onclick=\"goNews($id);\" class=\"zagolovok\">";
-	if ($i==0 && $type=="Event") { echo "$zag ( НАЙБЛИЖЧЕ )"; } else { echo "$zag"; }
+	if ($i==0 && $type=="Event" && $closest!=0) { echo "$zag ( НАЙБЛИЖЧЕ )"; } else { echo "$zag"; }
 	echo "</p>";
 	$de=$_COOKIE["userID"];
 
@@ -183,18 +196,21 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 	echo "<div class=\"btnS\" onclick=\"goNews($id);\" style=\"width:200; margin:0 0; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 		echo "<a class=\"small_btn_text\" style=\"position:absolute; margin:0 40;\">більше . . .</a>";
 	echo "</div>";
-	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent(getUserValue($_COOKIE["userID"],"ID"),$id)==0)
+		if($statti[$i]->howFar()>0)
+		{
+	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent($userID,$id)==0 && getUserStatusById($userID)!="Deleted")
 	{
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:275; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 	echo "<a class=\"small_btn_text\" onclick=\"registrateOnEvent($id);\" style=\"position:absolute; margin:0 40;\">зареєструватись</a>";
 	echo "</div>";
 	}
-	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent(getUserValue($_COOKIE["userID"],"ID"),$id)==1)
+	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent($userID,$id)==1 && getUserStatusById($userID)!="Deleted")
 	{
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:325; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 	echo "<a class=\"small_btn_text\" onclick=\"deRegistrateOnEvent($id);\" style=\"position:absolute; margin:0 40;\">відмінити реєстрацію</a>";
 	echo "</div>";
 	}
+		}
 	echo "</div>";
 
 	$AuthID=getSqlValueById($id, "Creator_ID","News");
@@ -217,10 +233,36 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 	echo "<a class=\"text_S\" style=\"position:absolute; right:0; text-align:right; bottom:0; opacity:0.5;\">$Auth</a>";
 
 echo "</div>";
-
-
 }
 ?>
+<div style="position:relative; top:200; width:200;height:50; margin:10; left:calc(50% - 100px);">
+	<?php
+	if($_GET["page"]!=null && $_GET["page"]!=0)
+	{
+		echo "<div onclick=\"gotoNewsNext(";
+		echo $_GET["page"]==null?1:$_GET["page"]-1;
+		echo ");\" style=\"position:absolute; cursor:pointer; display:inline-block; width:50; height:100%; background:#1a58a3; left:0;\">";
+		echo "<a style=\"color:white; font-size:30;left:10; top:5; text-align:center; position:absolute;\" class=\"text_S\"><</a>";
+		echo "</div>";
+	}
+	?>
+	
+	<div style="position:absolute; display:inline-block; margin:0 50; top:0; width:100; height:50; text-align:center; color:black; font-size:30;" class="text_S">
+		<?php echo $_GET["page"]==null?1:$_GET["page"]+1; ?>
+	</div>
+
+	<?php 
+	if(isNextB()==1)
+	{
+		echo "<div onclick=\"gotoNewsNext(";
+		echo $_GET["page"]==null?1:$_GET["page"]+1;
+		echo ");\" style=\"position:absolute; cursor:pointer; display:inline-block; width:50; height:100%; background:#1a58a3; right:0;\">";
+		echo "<a style=\"color:white; font-size:30;left:10; top:5; text-align:center; position:absolute;\" class=\"text_S\">></a>";
+		echo "</div>";
+	}
+	?>
+	
+</div>
 
 <div id="head"></div>
 <script> 

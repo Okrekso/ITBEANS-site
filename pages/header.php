@@ -65,14 +65,14 @@
     
     <div style="position:absolute; background: red; width:100; top:60; right:50; transform:rotate(-45deg); height:25;">
         <a style="position:absolute; text-align:center; margin:2 25%; color:white; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">
-            ALPHA
+            BETA
             </a>
         </div>
     
         <div style="width:100; height:100; position:absolute; top:0; margin:20 -75; background:#225dae; transform:rotate(45deg);"></div>
         
     <a style="opacity:0.5; position:fixed; bottom:10; right:10; font-size:15; font-family:HeaderText;">
-        IT B.E.A.N.S. oficial site alpha v.0.9.7
+        IT B.E.A.N.S. oficial site beta v.0.1.0
     </a>
 
     <?php

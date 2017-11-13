@@ -28,19 +28,18 @@ function sendPost()
 <?php
 if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]!=null)
 {
-    echo "<script>alert(\"ready to edit!\");</script>";
     $head=$_POST["Head"];
     $small_content=$_POST["SmallText"];
     $content=$_POST["BigText"];
     $authorID=getUserValue($_COOKIE["userID"],"ID");
-    $type=$_POST["Type"];
+    $type=$_POST["Type"]==1?"News":"Event";
     $date=$_POST["Date"];
     $time=$_POST["Time"];
     $price=$_POST["Price"];
     $newsID=$_GET["editID"];
 
     $finalDate=$date." ".$time.":00";
-
+    
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("UPDATE News SET Head='$head', Content='$content', Small_content='$small_content',Type='$type',Creator_ID='$authorID',StartDate='$finalDate',Price='$price' WHERE `ID`='$newsID'");
     
@@ -54,17 +53,17 @@ if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]==null)
     $small_content=$_POST["SmallText"];
     $content=$_POST["BigText"];
     $authorID=getUserValue($_COOKIE["userID"],"ID");
-    $type=$_POST["Type"];
+    $type=$_POST["Type"]==1?"News":"Event";
     $date=$_POST["Date"];
     $time=$_POST["Time"];
     $price=$_POST["Price"];
-
+    
     $finalDate=$date." ".$time.":00";
-
+    
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
     $result=$sqlCon->query("INSERT INTO News(Head, Content, Small_content,Type,Creator_ID,StartDate,Price) VALUES('$head','$content','$small_content','$type','$authorID','$finalDate','$price')");
     if($result==true){echo "<script>document.location.href=\"/pages/news.php\"</script>";}
-    else {echo "<script>console.log(\"errors while sending!\");</script>";}
+    else {echo "<script>console.log(\"errors while sending! $result\");</script>";}
 }
 ?>
 

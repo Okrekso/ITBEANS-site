@@ -27,7 +27,7 @@
         function setVisited($str)
         {
             $elems=explode(";",$str);
-            for($i=0;$i<count($elems)-1;$i++)
+            for($i=0;$i<count($elems);$i++)
             {
                 $element=explode("-",$elems[$i]);
                 $NewsID=$element[0];
@@ -36,8 +36,7 @@
                 $Additional=$element[3];
                 $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
                 $result=$sqlCon->query("UPDATE `Visitors` SET `Visited`='$Visited', `Additional`='$Additional' WHERE `NewsID`='$NewsID' AND `UserID`='$UserID'");  
-                if($result!=true){$err=$sqlCon->error; echo "<script>console.log(\"errors while upd:$err\");</script>";}            
-                $sqlCon->close();  
+                if($result!=true){ echo "<script>console.log(\"errors while upd\");</script>"; }            
             }
         }
 
@@ -48,13 +47,21 @@
         $result=$sqlCon->query("SELECT ID FROM News WHERE Creator_ID='$CreatorID' AND Type='Event'");
         while($event=$result->fetch_assoc()){ $count+=1; }
         $result->close();
-        $result=$sqlCon->query("SELECT Head, ID, Small_content,Type FROM News WHERE Creator_ID='$CreatorID' AND Type='Event'");
+        $result=$sqlCon->query("SELECT Head, ID, Small_content,Type,StartDate FROM News WHERE Creator_ID='$CreatorID' AND Type='Event'");
 
         $i=0;
         while($event=$result->fetch_assoc())
         {
             $name = $event["Head"];
             $id=$event["ID"];
+            
+            $d=strtotime($event["StartDate"]);
+            
+            $now=date("U");
+            $now=strtotime("-1 hour");
+            
+            $dif=($d-$now);
+            $howFar=$dif/60;
 
             $members_count=0;
 
@@ -73,11 +80,13 @@
                     $userName=getSqlValueById($user["UserID"], "Name","Users");
                     echo "<div id=\"visitor_$i\" style=\"position:relative; width:100%; height:25; background:white; box-shadow:0 0 10px #a1a1a1; opacity:1;\">";
                     echo "<a class=\"text_S\" style=\"color:black; margin:50% 0;\">"; echo "$userName"; echo "</a>";
-                        
+                        if($howFar<=0)
+                        {
                         echo "<div style=\"background:#c5c5c5; width:50; top:0; position:absolute; right:0; height:100%;\">";
                             echo "<div id=\"isPres_$id-$userID\" class=\"isVisited\" onclick=\"switcher('isPres_$id-$userID');\" style=\"cursor:pointer; width:50%; height:100%; background:#0f2848;\"></div>";
                         echo "</div>";
                         echo "<input value=\"$Additional\" id=\"additional_$id-$userID\" onfocusin=\"clearElem('additional_$id-$userID','$Additional');\" onfocusout=\"clearElem('additional_$id-$userID','$Additional');\" style=\"width:50; margin:auto auto; right:55; top:2; text-align:center; position:absolute;\"></input>";
+                        }
                     echo "</div>";
                     
                     echo "<script>";

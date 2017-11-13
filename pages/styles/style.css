@@ -140,8 +140,11 @@ src: url('/pages/fonts/headfont.otf');
 	font-family:HeaderText;
 	Color:rgb(255, 255, 255);
 }
-
-
+#arrow
+{
+	top:150;
+	left:calc(72% - 550px);
+}
 .text_S
 {
 	margin:0 5;

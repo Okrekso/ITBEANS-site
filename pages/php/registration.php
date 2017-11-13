@@ -63,6 +63,10 @@ function getUserStatus()
 {
     return getUserValue($_COOKIE["userID"],"Status");
 }
+function getUserStatusById($Id)
+{
+    return getSqlValueById($Id,"Status","Users");
+}
 function setUserValue($UserID,$ValueName, $Value)
 {
     $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
@@ -74,5 +78,14 @@ function setUserValue($UserID,$ValueName, $Value)
 function consoleLog($string)
 {
     echo "<script>console.log(\"$string\");</script>";
+}
+
+function isNextB()
+{
+    $page=$_GET["page"]==null?0:$_GET["page"]; $maxP=($page+1)*10;
+    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $res=$sqlCon->query("SELECT * FROM News ORDER BY ID DESC LIMIT 10 OFFSET $maxP");
+    $result=$res->fetch_assoc();
+    if ($result['Head']!='') { return 1; } else { return 0; }
 }
 ?>
