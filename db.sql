@@ -19,7 +19,8 @@ CREATE TABLE News
     Type varchar(100),
     CreateDate date,
     StartDate dateTime,
-    Price INT
+    Price INT,
+    Ended INT
 );
 
 CREATE TABLE Visitors
@@ -28,7 +29,8 @@ CREATE TABLE Visitors
     UserID INT,
     NewsID INT, FOREIGN KEY(NewsID) REFERENCES `News`(`ID`),
     Visited INT,
-    Additional INT
+    Additional INT,
+    Apprised INT
 );
 
 CREATE TRIGGER `dater` BEFORE INSERT ON `News` FOR EACH ROW
@@ -74,27 +76,46 @@ SET NEW.`Visited`=0;
 
 END;
 
-CREATE TRIGGER Visited BEFORE UPDATE ON `Visitors` FOR EACH ROW
+CREATE TRIGGER `Visited` BEFORE UPDATE ON `Visitors` FOR EACH ROW
 BEGIN
-SET @curVisit=(SELECT `Visited` FROM Visitors WHERE ID=NEW.`ID`);
-SET @CurLevel= (SELECT `Level` FROM Users WHERE ID=NEW.`UserID`);
-SET @Price=(SELECT Price FROM News WHERE ID=NEW.`NewsID`);
+SET @Price=(SELECT `Price` FROM News WHERE `ID`=NEW.`NewsID`);
+SET @OldVisit=(SELECT `Visited` FROM Visitors WHERE `ID`=NEW.`ID`);
+SET @Creator=(SELECT `Creator_ID` FROM News WHERE ID=NEW.`NewsID` LIMIT 1);
+SET @IsEnded=(SELECT Ended FROM News WHERE ID=NEW.`NewsID`);
 
-IF NEW.`Visited`=1 AND @curVisit!=NEW.`Visited`
+IF(@IsEnded=0)
 THEN
-UPDATE Users SET Level=@CurLevel+@Price WHERE ID=NEW.`UserID`;
+UPDATE Users SET `Level`=`Level`-@Price WHERE `ID` NOT IN 
+(SELECT UserID FROM Visitors WHERE `NewsID`=NEW.`NewsID`);
 
-ELSEIF NEW.`Visited`=0 AND @curVisit!=NEW.`Visited`
-THEN
-UPDATE Users SET Level=@CurLevel-@Price WHERE ID=NEW.`UserID`;
+UPDATE News SET Ended=1 WHERE ID=NEW.`NewsID`;
 END IF;
 
-SET @old=(SELECT `Additional` FROM `Visitors` WHERE ID=NEW.`ID`);
-
-IF NEW.`Additional`!=@old
+IF (NEW.`Apprised`=1)
 THEN
-UPDATE Users SET Level=@curLevel+(NEW.`Additional`-@old)
-WHERE ID=NEW.`UserID`;
+	IF (@OldVisit=1 AND NEW.`Visited`!=@OldVisit) 
+    THEN UPDATE Users SET `Level`=`Level`-@Price WHERE `ID`=NEW.`UserID`;
+	ELSEIF (@OldVisit=0 AND NEW.`Visited`!=@OldVisit) 
+    THEN UPDATE Users SET `Level`=`Level`+ROUND(@Price/2,0) WHERE `ID`=NEW.`UserID`;
+    END IF;
+ELSEIF (NEW.`Apprised`=0 OR NEW.`Apprised` IS NULL)
+THEN
+	SET NEW.`Apprised`=1;
 END IF;
 
-END;
+IF(NEW.`Visited`=1 AND NEW.`Visited`!=@OldVisit) 
+	THEN UPDATE Users SET `Level`=`Level`+@Price WHERE ID=NEW.`UserID`;
+END IF;
+IF(NEW.`Visited`=0 AND NEW.`Visited`!=@OldVisit)
+	THEN UPDATE Users SET `Level`=`Level`-ROUND(@Price/2,0) WHERE ID=NEW.`UserID`;
+END IF;
+
+IF (NEW.`Additional` IS NOT NULL)
+THEN
+	SET @OldAdd=(SELECT Additional FROM Visitors WHERE ID=NEW.`ID`);
+    IF @OldAdd IS NOT NULL THEN
+    	UPDATE Users SET Level=Level-@OldAdd WHERE ID=NEW.`UserID`;
+    END IF;
+    UPDATE Users SET Level=Level+NEW.`Additional` WHERE ID=NEW.`UserID`;
+END IF;
+END

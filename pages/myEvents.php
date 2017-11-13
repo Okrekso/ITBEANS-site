@@ -27,7 +27,7 @@
         function setVisited($str)
         {
             $elems=explode(";",$str);
-            for($i=0;$i<count($elems);$i++)
+            for($i=0;$i<count($elems)-1;$i++)
             {
                 $element=explode("-",$elems[$i]);
                 $NewsID=$element[0];
@@ -36,8 +36,8 @@
                 $Additional=$element[3];
                 $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
                 $result=$sqlCon->query("UPDATE `Visitors` SET `Visited`='$Visited', `Additional`='$Additional' WHERE `NewsID`='$NewsID' AND `UserID`='$UserID'");  
-                if($result!=true){echo "<script>console.log(\"errors while upd\");</script>";}            
-                //$sqlCon.close();  
+                if($result!=true){$err=$sqlCon->error; echo "<script>console.log(\"errors while upd:$err\");</script>";}            
+                $sqlCon->close();  
             }
         }
 
