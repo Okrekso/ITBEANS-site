@@ -1,7 +1,7 @@
 switchers=new Array();
 function switchersIsEvent(isSwitched)
 {
-    if(isSwitched==0)
+    if(isSwitched==1)
     {
         $("#Date").animate({opacity:"+=1"},500);
         $("#Time").animate({opacity:"+=1"},500);
@@ -12,11 +12,11 @@ function switchersIsEvent(isSwitched)
         var time=(d.getHours()<10?"0"+d.getHours():d.getHours())+":"+(d.getMinutes()<10?"0"+d.getMinutes():d.getMinutes());
         if($("#Date").val()=="") { $("#Date").val(date); }
         if($("#Time").val()=="") { $("#Time").val(time); }
-        document.getElementById("Type").value="Event";
+        document.getElementById("Type").value="1";
     }
     else
     {
-        document.getElementById("Type").value="News";
+        document.getElementById("Type").value="0";
         $("#Date").animate({opacity:"-=1"},500);
         $("#Time").animate({opacity:"-=1"},500);
         $("#Price").animate({opacity:"-=1"},500);
@@ -93,7 +93,6 @@ function switchersIsVisited(isSwitched,id)
 function setSwitcher(switchID,val)
 {
     var exist=0; var num;
-    
     for(i=0;i<switchers.length;i++)
     {
         if(switchers[i][0]==switchID) { exist=1; num=i; break; }
@@ -119,20 +118,18 @@ function switcher(elemID)
     elementName="#"+$("#"+elemID).attr('id');
     elem=document.getElementById(elemID);
     var exist=0; var num;
-
+    for (i=0;i<switchers.length;i++) { console.log(i+")"+switchers[i][0]); }
     for(i=0;i<switchers.length;i++)
     {
         if(switchers[i][0]==elemID) { exist=1; num=i; break; }
     }
     if(exist!=1) { switchers.push(new Array(elemID,0)); num=switchers.length-1; }
     
-    switch(elem.className)
-    {
-        case("isEvent"): console.log(exist); switchersIsEvent(switchers[num][1]); break;
-    }
+
     
     if(switchers[num][1]==0)
     {
+        switchers[num][1]=1;
         document.getElementById(switchers[num][0]).onclick=function(){};
         
         $("#"+switchers[num][0]).animate({ width:"+=50%"},500,
@@ -141,18 +138,19 @@ function switcher(elemID)
             
             $("#"+switchers[num][0]).animate({marginLeft:"+=50%",width:"-=50%", "background-color":"#1ba12d"},300,function()
             {
-                if(elem.className=="isVisited")
+                switch(elem.className)
                 {
-                    switchersIsVisited(switchers[num][1],elem.id);
+                    case("isEvent"): switchersIsEvent(switchers[num][1]); break;
+                    case("isVisited"):switchersIsVisited(switchers[num][1],elem.id); break;
                 }
             }); 
             document.getElementById(switchers[num][0]).onclick=function(){switcher(switchers[num][0]);};
-            
         }); 
-        switchers[num][1]=1;
+        
     }
     else
     {
+        switchers[num][1]=0;
         document.getElementById(switchers[num][0]).onclick=function(){};
         $("#"+switchers[num][0]).animate({width:"+=50%",marginLeft:"-=50%"},500,
         function()
@@ -160,14 +158,14 @@ function switcher(elemID)
             //$("#"+switchers[num][0]).css({float:"right"});
             $("#"+switchers[num][0]).animate({width:"-=50%","background-color":"#9c0404"},300,function()
         {
-            if(elem.className=="isVisited")
+            switch(elem.className)
             {
-                switchersIsVisited(switchers[num][1],elem.id);
+                case("isEvent"): switchersIsEvent(switchers[num][1]); break;
+                case("isVisited"):switchersIsVisited(switchers[num][1],elem.id); break;
             }
         });
         document.getElementById(switchers[num][0]).onclick=function(){switcher(switchers[num][0]);};
             
         }); 
-        switchers[num][1]=0;
     }
 }

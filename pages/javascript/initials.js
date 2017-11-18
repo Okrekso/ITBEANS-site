@@ -35,12 +35,13 @@ function accountTip()
 
     document.getElementById("myEvents_button").style.display="block"; 
 
-        if(chekFBlogin()==1 || $.cookie("userID")!="none")
+        if(chekFBlogin()==1 && $.cookie("userID")!="none" || $.cookie("userID")!="none")
         {
         document.getElementById("fb_button").style.display="none";
         document.getElementById("logout_button").style.display="block";
         }
-        else
+        
+        if(chekFBlogin()==0 && $.cookie("userID")=="none")
         {
         document.getElementById("fb_button").style.display="block";
         document.getElementById("logout_button").style.display="none";
@@ -143,6 +144,24 @@ function hide(name)
         elem[i].style.top="-100";
         elem[i].style.visibility="hidden";
     }
+}
+
+function shining(to)
+{
+    var arr=document.getElementsByClassName("shine");
+        for(i=0;i<arr.length;i++)
+        {
+    if(to==0)
+    {   
+        if(i==0) $(arr[i]).animate({width:80,height:80, left:"-=15", top:"-=15",},2000,function(){shining(1);});
+        else $(arr[i]).animate({width:80,height:80, left:"-=15", top:"-=15",},2000);
+    }
+    else
+    {  
+        if(i==0) $(arr[i]).animate({width:50,height:50, left:"+=15", top:"+=15"},2000,function(){shining(0);}); 
+        else $(arr[i]).animate({width:50,height:50, left:"+=15", top:"+=15"},2000); 
+    }
+        }
 }
 
 function howFarToEvent(date)

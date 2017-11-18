@@ -48,19 +48,30 @@ THEN
 SET NEW.`Status`='Green';
 END IF;
 
-IF NEW.Level>=30
-THEN
-IF NEW.Level<90
+IF NEW.Level>=30 AND NEW.Level<90
 THEN
 SET NEW.`Status`='Orange';
 END IF;
-END IF;
 
-IF NEW.Level>90 
+IF NEW.Level>=90 AND NEW.Level<=100 AND NEW.Status!='Orange'
 THEN
 SET NEW.`Status`='Gold';
 END IF;
 
+IF NEW.Level>100 AND NEW.Level<=200
+THEN
+	IF NEW.Status='Gold' OR NEW.Status='Legendary'
+    THEN
+		SET NEW.`Status`='Diamond';
+    END IF;
+END IF;
+
+IF NEW.Level>200 AND NEW.Level<=400 AND NEW.Status='Diamond'
+THEN
+SET NEW.`Status`='Legendary';
+END IF;
+
+IF NEW.Level>400 THEN SET NEW.Level=400; END IF;
 END
 
 CREATE TRIGGER `new_visitor` BEFORE INSERT ON `Visitors` FOR EACH ROW 

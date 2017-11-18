@@ -1,6 +1,6 @@
 
 <?php 
-$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+$sqlCon= getSqlUrl();
 $result=$sqlCon->query("SELECT ID, Name, Login, Level, Status FROM Users");
 
 function sorter($array)
@@ -48,6 +48,8 @@ function createUser($User, $Num)
         if(getUserStatusById($ID)=="Green"){ echo "background:#47ad4c; border-color:rgb(32, 121, 47); width:75; height:75; margin:6 6;\">"; }
         if(getUserStatusById($ID)=="Orange"){ echo "background:#cc9509; border-color:rgb(175, 111, 7); width:75; height:75; margin:6 6;\">"; }
         if(getUserStatusById($ID)=="Gold"){ echo "background:#e6d200; border-color:rgb(174, 177, 7); width:75; height:75; margin:6 6;\">"; }
+        if(getUserStatusById($ID)=="Diamond"){ echo "background:#195b60; border-color:rgb(67, 132, 137); width:75; height:75; margin:6 6;\">"; }
+        if(getUserStatusById($ID)=="Legendary"){ echo "background:#610c79; border-color:rgb(115, 21, 98); width:75; height:75; margin:6 6;\">"; }
         if(getUserStatusById($ID)=="Deleted"){ echo "background:#b30000; border-color:rgb(118, 0, 0); width:75; height:75; margin:6 6;\">"; }
         }
             if($Xp=="") { echo "<img src=\"/images/beans/gray.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
@@ -56,6 +58,8 @@ function createUser($User, $Num)
             if(getUserStatusById($ID)=="Green"){ echo "<img src=\"/images/beans/green.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
             if(getUserStatusById($ID)=="Orange"){ echo "<img src=\"/images/beans/orange.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
             if(getUserStatusById($ID)=="Gold"){ echo "<img src=\"/images/beans/yellow.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
+            if(getUserStatusById($ID)=="Diamond"){ echo "<img src=\"/images/beans/diamond.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
+            if(getUserStatusById($ID)=="Legendary"){ echo "<img src=\"/images/beans/legendary.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
             if(getUserStatusById($ID)=="Deleted"){ echo "<img src=\"/images/beans/red.png\" class=\"bob_img\" style=\"width:50; height:70; margin: auto 50%; top:2; left:-25;\"></img>"; }
             }
 
@@ -70,13 +74,15 @@ function createUser($User, $Num)
         if(getUserStatusById($ID)=="Green"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:green;\" >$Status</b>"; }
         if(getUserStatusById($ID)=="Orange"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:orange;\" >$Status</b>"; }
         if(getUserStatusById($ID)=="Gold"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:#e6d200;\" >$Status</b>"; }
+        if(getUserStatusById($ID)=="Diamond"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:#376d71;\" >$Status</b>"; }
+        if(getUserStatusById($ID)=="Legendary"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:#71376a;\" >$Status</b>"; }
         if(getUserStatusById($ID)=="Deleted"){ echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:red;\" >$Status</b>"; }        
         }
         //echo "<b class=\"text_S\" style=\" position:relative; margin:0 0; top:5; font-size:10; color:black;\">$Xp</b>";
             
         if(getUserStatusById($ID)==""  || getUserStatusById($ID)=="Orange" && getSqlValueById($ID,"Level","Users")>90 || getUserStatusById($ID)=="Deleted")
         { 
-        if(getUserStatus()=="Gold")
+        if(getUserProtectLevel()>=3)
         {
         $toGold=0;
         if(getUserStatusById($ID)=="Orange" && getSqlValueById($ID,"Level","Users")>90){$toGold=1;}
@@ -90,20 +96,48 @@ function createUser($User, $Num)
         }
         else
         {
-        echo "<div style=\"display:inline-block; margin:25 0; left:95; position:absolute; width:80%; height:5; background:white;\">";
-                
-                if(getUserStatusById($ID)=="Green") { echo "<div style=\"width:$Xp%; height:100%; background:green;\"></div>"; }
-                if(getUserStatusById($ID)=="Orange") { echo "<div style=\"width:$Xp%; height:100%; background:orange;\"></div>"; }
-                if(getUserStatusById($ID)=="Gold") { echo "<div style=\"width:$Xp%; height:100%; background:#e6d200;\"></div>"; }
+        if(getUserStatusById($ID)!="Diamond" && getUserStatusById($ID)!="Legendary")
+        { 
+            echo "<div style=\"display:inline-block; margin:25 0; left:95; position:absolute; width:80%; height:5; background:white;\">";
+        }
+        if(getUserStatusById($ID)=="Diamond")
+        { 
+            echo "<div style=\"display:inline-block; margin:25 0; left:95; position:absolute; width:80%; height:5; background:#e6d200;\">";
+        }
+        if($Xp<=300 && getUserStatusById($ID)=="Legendary")
+        { 
+            echo "<div style=\"display:inline-block; margin:25 0; left:95; position:absolute; width:80%; height:5; background:#c3e7f8;\">";
+        }
+        if($Xp>300)
+        {
+            echo "<div style=\"display:inline-block; margin:25 0; left:95; position:absolute; width:80%; height:5; background:#941189;\">";            
+        }
 
-            echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 0%; top:5;\"></a>";
+            if(getUserStatusById($ID)=="Green") { echo "<div style=\"width:$Xp%; height:100%; background:green;\"></div>"; }
+            if(getUserStatusById($ID)=="Orange") { echo "<div style=\"width:$Xp%; height:100%; background:orange;\"></div>"; }
+            if(getUserStatusById($ID)=="Gold") { echo "<div style=\"width:$Xp%; height:100%; background:#e6d200;\"></div>"; }
+            if(getUserStatusById($ID)=="Diamond"){ echo "<div style=\"width: calc($Xp% - 100%); height: 100%; background: #c3e7f8;\"></div>"; }
+            if(getUserStatusById($ID)=="Legendary") 
+            { 
+                $wdth=$Xp>300?$Xp-300:$Xp-200; 
+                if($Xp<=300) { echo "<div style=\"width:$wdth%; height:100%; background:#941189;\"></div>"; }
+                if($Xp>300) { echo "<div style=\"width:$wdth%; height:100%; background:#6c00ff;\"></div>"; }
+            }
+
+            echo "<a class=\"text_S\" style=\"dipslay:block; position:absolute; margin:0% 0%; top:5;\"></a>";
             echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 10%; top:5;\">0</a>";
             echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 50%; top:5;\">40</a>";
             echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 90%; top:5;\">90</a>";
             echo "<a class=\"text_S\" style=\"position:absolute; margin:0% 100%; top:5;\">100</a>";
+
+            if(getUserStatusById($ID)=="Legendary")
+            { $wdth=$Xp>300?$Xp-300:$Xp-200; echo "<img class='shine' src='/images/shine_legendary.png' style='width:50;height:50; position:absolute; margin:calc(0% - 25px) calc($wdth% - 25px);'></img>"; }
+            if(getUserStatusById($ID)=="Diamond")
+            { echo "<img class='shine' src='/images/shine_diamond.png' style='width:50;height:50; position:absolute; margin:calc(0% - 25px) calc($Xp% - 100% - 25px);'></img>"; }
         echo "</div>";
         }
     echo "</div>";
+    
     }
 }
 
