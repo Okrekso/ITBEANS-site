@@ -81,9 +81,14 @@ THEN
 SET NEW.`Additional`=0;
 END IF;
 
+SET NEW.`Apprised`=0;
 SET NEW.`Visited`=0;
 
-END;
+SET @Creator=(SELECT Creator_ID FROM News WHERE ID=NEW.`NewsID`);
+SET @Price=(SELECT Price FROM News WHERE ID=NEW.`NewsID`);
+UPDATE Users SET `Level`=`Level`+1 WHERE ID=@Creator;
+
+END
 
 CREATE TRIGGER `Visited` BEFORE UPDATE ON `Visitors` FOR EACH ROW
 BEGIN
