@@ -30,7 +30,6 @@
     <div id="content" style=" width:100%;">
     <?php $result=getNews($_GET["newsID"]); echo $result->content; ?>
     </div>
-    <?php include '/php/registration.php'?>
     <?php
     $id=$_GET["newsID"];
 
@@ -39,7 +38,7 @@
 		$newsID=$_POST["toRegistr"];
 		$userID=getUserValue($_COOKIE["userID"],"ID");
 
-		$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+		$sqlCon= getSqlUrl();
 		$result=$sqlCon->query("INSERT INTO Visitors(UserID, NewsID) VALUES('$userID','$newsID')");
     }
     
@@ -48,7 +47,7 @@
 		$newsID=$_POST["toDeregistr"];
 		$userID=getUserValue($_COOKIE["userID"],"ID");
 
-		$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+		$sqlCon= getSqlUrl();
 		$result=$sqlCon->query("DELETE FROM Visitors WHERE `UserID`='$userID' AND `NewsID`='$newsID'");
 		
     }
@@ -60,17 +59,23 @@
         echo "<input id=\"toDeregistr\" style=\"display:none\" name=\"toDeregistr\"></input>";
         echo "</form>";
     }
-	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent(getUserValue($_COOKIE["userID"],"ID"),$id)==0 && getUserStatus(getUserValue($_COOKIE["userID"],"ID"))!="Deleted")
+	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent(getUserValue($_COOKIE["userID"],"ID"),$id)==0 && getUserStatus(getUserValue($_COOKIE["userID"],"ID"))!="Deleted" && getUserStatusById(getUserValue($_COOKIE["userID"],"ID"))!="")
 	{
+        if(isPostCreator($_COOKIE["userID"],$id)==0)
+        {
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:275; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 	echo "<a class=\"small_btn_text\" onclick=\"registrateOnEvent($id);\" style=\"position:absolute; margin:0 40;\">зареєструватись</a>";
-	echo "</div>";
+    echo "</div>";
+        }
 	}
-	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent(getUserValue($_COOKIE["userID"],"ID"),$id)==1 && getUserStatus(getUserValue($_COOKIE["userID"],"ID"))!="Deleted")
+	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent(getUserValue($_COOKIE["userID"],"ID"),$id)==1 && getUserStatus(getUserValue($_COOKIE["userID"],"ID"))!="Deleted" && getUserStatusById(getUserValue($_COOKIE["userID"],"ID"))!="")
 	{
+        if(isPostCreator($_COOKIE["userID"],$id)==0)
+        {
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:325; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 	echo "<a class=\"small_btn_text\" onclick=\"deRegistrateOnEvent($id);\" style=\"position:absolute; margin:0 40;\">відмінити реєстрацію</a>";
-	echo "</div>";
+    echo "</div>";
+        }
 	}
     ?>
 

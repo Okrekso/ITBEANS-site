@@ -1,6 +1,9 @@
 body
 {
 	background-color:white;
+	background-image: url(/images/bg_dot.png);
+	background-size: 10px;
+	background-repeat: repeat;
 }
 
 @font-face

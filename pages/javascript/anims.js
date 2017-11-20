@@ -31,13 +31,12 @@ function setCollision(ID, varID)
 
 function scrolling()
 {
-    
     var elems=document.getElementsByClassName("scrollable");
 //////////////////////////////////////////////////////////
     var maxscroll=$(document).height()-$(window).height();
     var scroll =$(window).scrollTop();
     var scrollPercent=scroll*100/maxscroll;
-   
+    
 /////////////////////////////////////////////////////////
     for(i=0;i<animations.length;i++)
     {

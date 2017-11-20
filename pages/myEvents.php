@@ -11,11 +11,11 @@
         
         <body>
 
-        <?php include_once '/php/registration.php'?>
-        <?php include_once '/php/newsShower.php'?>
+        <?php include_once 'php/registration.php'?>
+        <?php include_once 'php/newsShower.php'?>
         
         <?php
-        if(getUserStatus()=="Gold")
+        if(getUserProtectLevel()>1)
         {
         echo "<form id=\"uservisit\" method=\"post\">";
             echo "<input id=\"toVisit\" name=\"toVisit\" style=\"display:none;\"></input>";
@@ -34,20 +34,20 @@
                 $UserID=$element[1];
                 $Visited=$element[2];
                 $Additional=$element[3];
-                $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+                $sqlCon= getSqlUrl();
                 $result=$sqlCon->query("UPDATE `Visitors` SET `Visited`='$Visited', `Additional`='$Additional' WHERE `NewsID`='$NewsID' AND `UserID`='$UserID'");  
                 if($result!=true){ echo "<script>console.log(\"errors while upd\");</script>"; }            
             }
         }
 
         setVisited($_POST["toVisit"]);
-        $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+        $sqlCon= getSqlUrl();
         $CreatorID=getUservalue($_COOKIE["userID"], "ID");
         $count=0;
         $result=$sqlCon->query("SELECT ID FROM News WHERE Creator_ID='$CreatorID' AND Type='Event'");
         while($event=$result->fetch_assoc()){ $count+=1; }
         $result->close();
-        $result=$sqlCon->query("SELECT Head, ID, Small_content,Type,StartDate FROM News WHERE Creator_ID='$CreatorID' AND Type='Event'");
+        $result=$sqlCon->query("SELECT Head, ID, Small_content,Type,StartDate FROM News WHERE Creator_ID='$CreatorID' AND Type='Event' ORDER BY `StartDate` DESC");
 
         $i=0;
         while($event=$result->fetch_assoc())

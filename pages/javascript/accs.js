@@ -59,7 +59,11 @@ window.fbAsyncInit = function() {
     {
         FB.login(function(responce){ chekRegistration(); });
     }
-    if(chekFBlogin()==1 || $.cookie("userID")!="none")
+    if(chekFBlogin()==1 && $.cookie("userID")=="none")
+    {
+        chekRegistration();
+    }
+    if(chekFBlogin()==1 && $.cookie("userID")!="none")
     {
         logOut();
         location.reload();

@@ -22,17 +22,17 @@ function sendPost()
 <script src="/pages/javascript/initials.js" type="text/javascript"></script>
 <script src="/pages/javascript/switchers.js" type="text/javascript"></script>
 
-<?php include_once '/php/registration.php'?>
+<?php include_once 'php/registration.php'?>
 
 <!--загрузка данных в базу-->
 <?php
-if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]!=null)
+if($_POST["Head"]!=null && getUserProtectLevel()>=3 && $_GET["editID"]!=null)
 {
     $head=$_POST["Head"];
     $small_content=$_POST["SmallText"];
     $content=$_POST["BigText"];
     $authorID=getUserValue($_COOKIE["userID"],"ID");
-    $type=$_POST["Type"]==1?"News":"Event";
+    $type=$_POST["Type"]==0?"News":"Event";
     $date=$_POST["Date"];
     $time=$_POST["Time"];
     $price=$_POST["Price"];
@@ -40,27 +40,27 @@ if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]!=null)
 
     $finalDate=$date." ".$time.":00";
     
-    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $sqlCon= getSqlUrl();
     $result=$sqlCon->query("UPDATE News SET Head='$head', Content='$content', Small_content='$small_content',Type='$type',Creator_ID='$authorID',StartDate='$finalDate',Price='$price' WHERE `ID`='$newsID'");
     
     if($result==true){echo "<script>document.location.href=\"/pages/news.php\"</script>";}
     else {echo "<script>console.log(\"errors while sending!\");</script>";}
 }
-if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]==null)
+if($_POST["Head"]!=null && getUserProtectLevel()>=3 && $_GET["editID"]==null)
 {
     echo "<script>console.log(\"ready to send!\");</script>";
     $head=$_POST["Head"];
     $small_content=$_POST["SmallText"];
     $content=$_POST["BigText"];
     $authorID=getUserValue($_COOKIE["userID"],"ID");
-    $type=$_POST["Type"]==1?"News":"Event";
+    $type=$_POST["Type"]==0?"News":"Event";
     $date=$_POST["Date"];
     $time=$_POST["Time"];
     $price=$_POST["Price"];
     
     $finalDate=$date." ".$time.":00";
     
-    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $sqlCon= getSqlUrl();
     $result=$sqlCon->query("INSERT INTO News(Head, Content, Small_content,Type,Creator_ID,StartDate,Price) VALUES('$head','$content','$small_content','$type','$authorID','$finalDate','$price')");
     if($result==true){echo "<script>document.location.href=\"/pages/news.php\"</script>";}
     else {echo "<script>console.log(\"errors while sending! $result\");</script>";}
@@ -69,7 +69,7 @@ if($_POST["Head"]!=null && getUserStatus()=="Gold" && $_GET["editID"]==null)
 
 
 <!--тело-->
-<div id="all" style=<?php if(getUserStatus()!="Gold"){echo "\"filter: blur(13px);\"";}?>>
+<div id="all" style=<?php if(getUserProtectLevel()<3){echo "\"filter: blur(13px);\"";}?>>
 
 <div id="elem" style="background:#f0f0f0; min-width:1000; height:480; top:200; width:90%; margin:0 auto; position:relative; ">
 
@@ -121,27 +121,26 @@ setSwitcher('isEvent',0);
         console.log(Time+"|"+Dt);
         document.getElementById("Date").value=Dt;
         $("#Time").val(Time);
-        
         $("#Zag").val(Zag);
         $("#SmallText").val(SmallText);
         $("#BigText").val(BigText);
         $("#Type").val(Type);
         $('#Price').val(Price);
-        if(Type=='Event') {switchersIsEvent(0); setSwitcher('isEvent',1); }
+        if(Type==1) { switchersIsEvent(1); setSwitcher('isEvent',1); }
     }
 </script>
 <?php
 $ID=$_GET["editID"];
 if($ID!=null)
 {
-    $sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+    $sqlCon= getSqlUrl();
     $result=$sqlCon->query("SELECT Head,Content,Type,Small_Content,StartDate,Price FROM `News` WHERE `ID`='$ID'");
     $rows;
     if($result!=null) {$rows=$result->fetch_assoc();}
     if($rows!=null)
     {
         $head=$rows["Head"]; $SmallText=$rows["Small_Content"]; $BigText=$rows["Content"];
-        $Type=$rows["Type"]; $StartDate=$rows["StartDate"]; $Price=$rows["Price"];
+        $Type=$rows["Type"]=="News"?0:1; $StartDate=$rows["StartDate"]; $Price=$rows["Price"];
         echo "<script> fillFields('$head','$SmallText','$BigText','$Type','$StartDate','$Price'); </script>";
     }
 }
@@ -168,7 +167,7 @@ setHeader();
 
 
 <?php
-if(getUserStatus()!="Gold")
+if(getUserProtectLevel()<3)
 {
     echo "<div style=\"position:fixed; width:100%; height:100%; background-color:rgba(42,136,216,0.9); left:0; top:0; opacity:0.5;\">";
     

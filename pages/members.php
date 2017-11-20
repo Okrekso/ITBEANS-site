@@ -12,9 +12,10 @@
 
 
 <script src="/pages/javascript/initials.js" type="text/javascript"></script>
-<?php include_once '/php/registration.php' ?>
+
+<?php include_once 'php/registration.php' ?>
 <?php 
-if(getUserStatus()!=null && getUserStatus()!="white") { include '/php/membersFill.php'; }
+if(getUserProtectLevel()>=1) { include 'php/membersFill.php';  }
 if(getUserStatus()==null)
 {
     echo "<div id='arrow' style='position:absolute; width:800; height:350;'>";
@@ -28,7 +29,7 @@ if(getUserStatus()==null)
 $toacc=$_POST["toAccept"];
 $togold=$_POST["toGold"];
 
-if($_POST["toAccept"]!=null && getUserStatus()=="Gold")
+if($_POST["toAccept"]!=null && getUserProtectLevel()>=3)
 {
     if(setSqlValue("$toacc","Level","10","Users")==1)
     {
@@ -41,7 +42,7 @@ if($_POST["toAccept"]!=null && getUserStatus()=="Gold")
     }
 }
 
-if($_POST["toGold"]!=null && getUserStatus()=="Gold")
+if($_POST["toGold"]!=null && getUserProtectLevel()>=3)
 {
     $a=$_POST["toGold"];
     echo "<script>console.log('a=$a');</script>";
@@ -58,7 +59,7 @@ if($_POST["toGold"]!=null && getUserStatus()=="Gold")
 ?>
 
 <?php
-if(getUserStatus()=="Gold")
+if(getUserProtectLevel()>=3)
 {
 echo "<form method=\"post\" id=\"acception\">";
     echo" <input style=\"display:none;\" id=\"toAccept\" name=\"toAccept\"></input>";
@@ -70,6 +71,7 @@ echo "</form>";
 }
 ?>
 
+<script>shining(0);</script>
 <div id="head"></div>
 <script> 
 setHeader();

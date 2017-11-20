@@ -1,3 +1,4 @@
+<?php include_once 'php/registration.php'?>
 <?php 
 global $statti,$stat;
 
@@ -16,7 +17,7 @@ class sMain
 		$this->head=$head; $this->content=$content; $this->ID=$ID; $this->smallContent=$smallContent;
 		$this->point=0; $this->type=$type; $this->startDate=$StartDate;
 
-		$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+		$sqlCon= getSqlUrl();
 		$result=$sqlCon->query("SELECT `Name` FROM `Users` WHERE `ID`='$CreatorID'");
 		if($result!=null) { $r=$result->fetch_assoc(); $this->creator=$r['Name']; }
 		else {$this->creator="error";}
@@ -207,7 +208,7 @@ function sorterEvents()
 function fillNews()
 {
 global $statti,$stat;
-$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+$sqlCon= getSqlUrl();
 $page=$_GET["page"]==null?0:$_GET["page"]; $maxP=$page*10;
 
 $Closest=$sqlCon->query("SELECT * FROM News WHERE `StartDate`!='0000-00-00 00:00:00' AND `StartDate`>=NOW() ORDER BY StartDate ASC LIMIT 1");
@@ -250,7 +251,7 @@ function deleteNews($ID)
 	$d=count($statti);
 	$g=$_POST["toDelete"];
 	
-	$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+	$sqlCon= getSqlUrl();
 	$Result=$sqlCon->query("DELETE FROM `Visitors` WHERE NewsID=$ID");
 	if($Result!=null)
 	{

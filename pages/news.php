@@ -54,7 +54,7 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 
 
 <!-- registrating user on event -->
-<?php  include "/php/registration.php"?>
+<?php  include "php/registration.php"?>
 <?php
 	
 	if($_POST["toRegistr"]!=null)
@@ -62,7 +62,7 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 		$newsID=$_POST["toRegistr"];
 		$userID=getUserValue($_COOKIE["userID"],"ID");
 
-		$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+		$sqlCon= getSqlUrl();
 		$result=$sqlCon->query("INSERT INTO Visitors(UserID, NewsID) VALUES('$userID','$newsID')");
 		if($result==true)
 		{
@@ -79,7 +79,7 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 		$newsID=$_POST["toDeregistr"];
 		$userID=getUserValue($_COOKIE["userID"],"ID");
 
-		$sqlCon= new mysqli("127.0.0.1:3306","root","","ITB");
+		$sqlCon= getSqlUrl();
 		$result=$sqlCon->query("DELETE FROM Visitors WHERE `UserID`='$userID' AND `NewsID`='$newsID'");
 		if($result==true)
 		{
@@ -93,7 +93,7 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 ?>
 
 <!--билдинг новостей-->
-<?php  include "/php/newsShower.php"?>
+<?php  include "php/newsShower.php"?>
 
 
 <form id="newsForm" type="get" action="showNews.php">
@@ -105,7 +105,7 @@ style="position:relative; margin:auto auto; width:30; height:30;"
 </form>
 
 <?php
-if(getUserStatus()=="Gold")
+if(getUserProtectLevel()>=3)
 {
 echo "<form id=\"editForm\" type=\"get\" action=\"newPost.php\">";
 echo "<input name=\"editID\" id=\"editID\" type=\"text\" style=\"display:none\"></input>";
@@ -121,7 +121,7 @@ echo "</form>";
 </script>
 
 <?php
-if(getUserStatus()=="Gold")
+if(getUserProtectLevel()>=3)
 {
 echo "<form method=\"post\" id=\"deleter\">";
 	echo "<input type=\"text\" style=\"display:none\" id=\"toDelete\" name=\"toDelete\"></input>";
@@ -145,7 +145,7 @@ function editPost(Id)
 <?php
 $deleter=$_POST["toDelete"];
 
-if($deleter!=null && getUserStatus()=="Gold")
+if($deleter!=null && getUserProtectLevel()>=3)
 {
 	deleteNews($deleter);
 }
@@ -173,7 +173,7 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 	echo "</p>";
 	$de=$_COOKIE["userID"];
 
-	if(getUserStatus()=="Gold")
+	if(getUserProtectLevel()>=3)
 	{
 		echo "<div onclick=\"editPost($id);\" style=\"position:absolute; right:40; top:0; margin:2 2; background:#0f2848; width:30; height:30; \">";
 			echo "<img src=\"/images/pen.png\" style=\"width:100%; height:100%;\"></img>";
@@ -198,17 +198,23 @@ echo "<div style=\" min-width:600; margin:20 auto; top:200;\" class=\"main\" id=
 	echo "</div>";
 		if($statti[$i]->howFar()>0)
 		{
-	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent($userID,$id)==0 && getUserStatusById($userID)!="Deleted")
+	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent($userID,$id)==0 && getUserStatusById($userID)!="Deleted" && getUserStatusById($userID)!="")
 	{
+		if(isPostCreator($_COOKIE["userID"],$id)==0)
+        {
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:275; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 	echo "<a class=\"small_btn_text\" onclick=\"registrateOnEvent($id);\" style=\"position:absolute; margin:0 40;\">зареєструватись</a>";
 	echo "</div>";
+		}
 	}
-	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent($userID,$id)==1 && getUserStatusById($userID)!="Deleted")
+	if(getSqlValueById($id,"Type","News")=="Event" && isOnEvent($userID,$id)==1 && getUserStatusById($userID)!="Deleted" && getUserStatusById($userID)!="")
 	{
+		if(isPostCreator($_COOKIE["userID"],$id)==0)
+        {
 	echo "<div class=\"btnS\" onclick=\"\" style=\"width:325; margin:0 10; position:relative; display:inline-block; bottom:10; box-shadow: 0 0 10px; left:10; height:30; background:#245eac;\">";
 	echo "<a class=\"small_btn_text\" onclick=\"deRegistrateOnEvent($id);\" style=\"position:absolute; margin:0 40;\">відмінити реєстрацію</a>";
 	echo "</div>";
+		}
 	}
 		}
 	echo "</div>";
